@@ -1,20 +1,24 @@
 # Build stage: Use Ubuntu as the base image
-FROM ubuntu AS build
+FROM ubuntu:20.04 AS build
+
+# Update the package lists and install necessary dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
 WORKDIR /app
 
 # Install necessary dependencies for building the application
-RUN apt-get update && apt-get install -y python3 python3-pip
+RUN pip3 install --no-cache-dir flask flask_restx flask_swagger_ui
 
-# Copy the requirements file
-COPY requirements.txt .
-
-# Install the Python dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
-
-# Copy the application code
+# Copy the application code into the container
 COPY . .
 
-# Set the entrypoint command
-ENTRYPOINT ["python3", "app.py"]
+# Expose the port on which the Flask application will run
+EXPOSE 9000
+
+# Run the Flask application
+CMD ["python3", "app.py"]
+
