@@ -1,0 +1,20 @@
+# Build stage: Use Ubuntu as the base image
+FROM ubuntu AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Install necessary dependencies for building the application
+RUN apt-get update && apt-get install -y python3 python3-pip
+
+# Copy the requirements file
+COPY requirements.txt .
+
+# Install the Python dependencies
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy the application code
+COPY . .
+
+# Set the entrypoint command
+ENTRYPOINT ["python3", "app.py"]
