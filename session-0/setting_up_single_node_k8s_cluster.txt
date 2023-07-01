@@ -24,19 +24,37 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 ##coredn issue : https://github.com/kubernetes/kubernetes/issues/70202
 sudo tee /run/flannel/subnet.env <<EOF
 
-FLANNEL_NETWORK=10.244.0.0/16
-FLANNEL_SUBNET=10.244.0.1/24
+FLANNEL_NETWORK=10.17.0.0/16
+FLANNEL_SUBNET=10.18.0.0/24
 FLANNEL_MTU=1450
 FLANNEL_IPMASQ=true
 
 EOF
-## Debugging
-https://www.goglides.dev/bkpandey/journalctl-to-debug-kubernetes-3h0j#:~:text=The%20command%20journalctl%20%2Dx%20%2Df,displayed%20as%20they%20are%20generated.
-
-https://www.loggly.com/ultimate-guide/using-journalctl/
 
 ##
 sudo kubeadm init --pod-network-cidr=10.17.0.0/16 --service-cidr=10.18.0.0/24 --kubernetes-version=1.22.0
 
 ##
 kubectl taint node mymasternode node-role.kubernetes.io/master:NoSchedule-
+
+##
+Error registering network: failed to acquire lease: subnet  specified in the flannel net config doesn't contain  PodCIDR of the  node
+
+## this will also work
+[root@ip-172-31-0-78 ec2-user]# cat /run/flannel/subnet.env
+FLANNEL_NETWORK=10.17.0.0/16
+FLANNEL_SUBNET=10.17.0.1/24
+FLANNEL_MTU=8951
+FLANNEL_IPMASQ=true
+
+## Debugging links
+
+https://github.com/kubernetes/kubernetes/issues/70202
+
+https://www.goglides.dev/bkpandey/journalctl-to-debug-kubernetes-3h0j#:~:text=The%20command%20journalctl%20%2Dx%20%2Df,displayed%20as%20they%20are%20generated.
+
+https://www.loggly.com/ultimate-guide/using-journalctl/
+
+https://stackoverflow.com/questions/50833616/kube-flannel-cant-get-cidr-although-podcidr-available-on-node
+
+https://devops.stackexchange.com/questions/14891/cni0-already-has-an-ip-address

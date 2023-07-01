@@ -21,4 +21,3 @@ EXPOSE 9000
 
 # Run the Flask application
 CMD ["python3", "app.py"]
-
