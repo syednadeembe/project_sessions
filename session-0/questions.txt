@@ -1,0 +1,1 @@
+once initialized where can i see the n/w cidr 

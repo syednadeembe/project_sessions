@@ -5,11 +5,16 @@ python3 -m venv venv
 source venv/bin/activate
 
 ### Install the required Flask package
+pip3 install --no-cache-dir flask flask_restx
 flask run
 
 ### this will start the webserver on 127.0.0.1:9000
 curl "http://localhost:9000/add?num1=5&num2=3" 
+curl "http://127.0.0.1:5000/add?num1=5&num2=3" 
 curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 3}' http://localhost:9000/add
+
+curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 3}' http://127.0.0.1:5000/add
+
 
 ### to run the application on docker container
 docker build -t myflaskapp .

@@ -1,15 +1,18 @@
-version: '3'
+version: '3.2'
 services:
-  build:
+  base:
     build:
       context: .
-      dockerfile: Dockerfile.build
-    target: build
-    # Add any additional build configurations if needed
+      dockerfile: Dockerfile.base
   compressed:
     build:
       context: .
       dockerfile: Dockerfile.compressed
-    target: compressed
+    ports:
+      - 9000:9000
+  multistaged:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 9000:9000
