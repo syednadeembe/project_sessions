@@ -4,15 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.base
-  compressed:
-    build:
-      context: .
-      dockerfile: Dockerfile.compressed
-    ports:
-      - 9000:9000
+    image: myapp:baseImage
   multistaged:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 9000:9000
+    image: myapp:productionImage
