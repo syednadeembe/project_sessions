@@ -10,5 +10,5 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 9000:9000
+      - "9000"
     image: myapp:productionImage
