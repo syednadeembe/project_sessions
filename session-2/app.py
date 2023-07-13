@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Welcome to the Simple Calculator!'
+    return ' Welcome to the Simple Calculator - Base Version'
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():

@@ -18,6 +18,8 @@ COPY app.py .
 
 # Run the build command to generate any build artifacts (if required)
 
+RUN sed -i 's/Base Version/Production Version/g' app.py
+
 # Final stage: Use a minimal base image for the runtime environment
 USER 1724
 FROM build AS multistaged

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: myapp
+  name: myapp-base
   labels:
-     app: myapp
+     app: myapp-base
 spec:
   containers:
-  - image: myapp:productionImage
+  - image: myapp:baseImage
     name: myapp-prod
     resources: {}
   dnsPolicy: ClusterFirst
