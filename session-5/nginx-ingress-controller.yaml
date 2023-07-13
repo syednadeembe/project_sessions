@@ -1,0 +1,74 @@
+# nginx-ingress-controller.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-ingress
+  template:
+    metadata:
+      labels:
+        app: nginx-ingress
+    spec:
+      serviceAccountName: lb
+      containers:
+        - name: nginx-ingress-controller
+          image: nginx/nginx-ingress-controller:latest
+          args:
+            - /nginx-ingress-controller
+            - --publish-service=$(POD_NAMESPACE)/nginx-ingress-controller
+            - --configmap=$(POD_NAMESPACE)/nginx-ingress-controller
+            - --default-backend-service=$(POD_NAMESPACE)/default-backend
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+
+---
+
+# default-backend.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: default-backend
+spec:
+  selector:
+    app: default-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+
+# example-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: example.local
+      http:
+        paths:
+          - path: /base
+            pathType: Prefix
+            backend:
+              service:
+                name: base-ingress
+                port:
+                  number: 31244 
+          - path: /production
+            pathType: Prefix
+            backend:
+              service:
+                name: production-ingress
+                port:
+                  number: 31603
+
