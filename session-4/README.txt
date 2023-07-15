@@ -1,5 +1,5 @@
 ###for generating sample yaml file
-kubectl run myapp --image=nginx --dry-run=client -oyaml
+kubectl run myapp --image=nginx --dry-run=client -oyaml 
 ###replica set & when to use it
 ###deployment and when to use it
 kubectl create deployment myapp-baseImage-deploy --image=myapp:baseImage --dry-run=client -ojson
@@ -14,3 +14,6 @@ kubectl rollout history deployment/myapp-deployment --revision=<revision_no>
 kubectl create service clusterip myapp-service --tcp=9000:9000 --dry-run=client -ojson
 ###for debugging explore debug / attach commands
 kubectl debug -it myapp --image=ubuntu --share-processes --copy-to=myapp-base
+
+
+

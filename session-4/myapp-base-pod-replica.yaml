@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-base-2
+  labels:
+     app: myapp-base
+spec:
+  containers:
+  - image: myapp:baseImage
+    name: myapp-prod
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

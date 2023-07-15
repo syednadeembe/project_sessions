@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: myapp-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: myapp.local
+    http:
+      paths:
+      - backend:
+          service:
+            name: myapp-base-service
+            port:
+              number: 9000
+        path: /base
+        pathType: Prefix
+      - backend:
+          service:
+            name: myapp-production-service
+            port:
+              number: 9000
+        path: /production
+        pathType: Prefix
