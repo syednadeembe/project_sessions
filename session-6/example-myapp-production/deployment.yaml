@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-production-deployment
+  labels:
+    app: myapp-production
+spec:
+  selector:
+    matchLabels:
+      app: myapp-production
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: myapp-production
+    spec:
+      containers:
+      - name: myapp-production
+        image: myapp:productionImage
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9000

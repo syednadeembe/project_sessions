@@ -1,0 +1,14 @@
+version: '3.2'
+services:
+  base:
+    build:
+      context: .
+      dockerfile: Dockerfile.base
+    image: myapp:baseImage
+  multistaged:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9000"
+    image: myapp:productionImage

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-production-service
+  labels:
+    app: myapp-production
+spec:
+  type: ClusterIP
+  selector:
+    app: myapp-production
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+      targetPort: 9000
