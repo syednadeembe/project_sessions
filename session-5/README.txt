@@ -35,6 +35,7 @@ k get svc -n ingress-nginx | grep -e "ingress-nginx-controller"
 ###Run a dummy pod for validation
 kubectl run nginx --image=nginx
 echo "<ingress-nginx-controller-IP>       myapp.local" >> /etc/hosts
+echo "10.99.132.189       myapp.local" >> /etc/hosts
 curl myapp.local/base
 curl myapp.local/production
 
