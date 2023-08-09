@@ -1,0 +1,30 @@
+version: '3'
+services:
+  ui:
+    build:
+      context: ./ui
+    ports:
+      - "8000:80"
+    depends_on:
+      - calculator-app
+    image: myapp:productionImage_ui
+
+  calculator-app:
+    build:
+      context: ./calculator
+    environment:
+      MONGO_URI: "mongodb://database:27017"
+    ports:
+      - "9000:9000"
+    depends_on:
+      - database
+    image: myapp:productionImage_app
+
+  database:
+    image: mongo:latest
+    environment:
+       MONGO_INITDB_ROOT_USERNAME: root
+       MONGO_INITDB_ROOT_PASSWORD: root  # Change this to a secure password
+    ports:
+      - "27017:27017"
+
