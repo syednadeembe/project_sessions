@@ -3,8 +3,10 @@ import prometheus_client
 from prometheus_client.core import CollectorRegistry
 from prometheus_client import Summary, Counter, Histogram, Gauge
 import time
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 _INF = float("inf")
 

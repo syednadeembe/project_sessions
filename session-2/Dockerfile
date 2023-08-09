@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /build
 
 # Install necessary dependencies for building the application
-RUN pip3 install --no-cache-dir flask flask_restx flask_swagger_ui prometheus-flask-exporter prometheus_client
+RUN pip3 install --no-cache-dir flask flask_restx flask_swagger_ui prometheus-flask-exporter prometheus_client flask-cors
 
 # Copy only the necessary files for building the application
 COPY app.py .
