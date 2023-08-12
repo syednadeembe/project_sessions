@@ -1,8 +1,22 @@
+## update the operating system
 sudo yum update -y
+
+## Install docker 
 sudo yum install -y docker
-sudo service docker start
+
+## start the docker service
+sudo service docker start 
+or 
+sudo systemctl start docker
+
+## Enable docker service at system reboot
+
+sudo systemctl enable docker
+
+## Adding docker group to ec2-user for permissions to run docker 
 sudo usermod -aG docker ec2-user
 
+## Adding the kubernetes repo in order to install kubernetes using YUM
 sudo tee /etc/yum.repos.d/kubernetes.repo <<EOF
 [kubernetes]
 name=Kubernetes
@@ -14,13 +28,24 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
 
+## Install kubernetes Libraries
 sudo yum install -y kubelet-1.22.0 kubeadm-1.22.0 kubectl-1.22.0 --disableexcludes=kubernetes
+
+## Enable kubelet service
 sudo systemctl enable --now kubelet
 
+## Intialize the kubernetes cluster
 sudo kubeadm init --kubernetes-version=1.22.0 --pod-network-cidr=192.168.0.0/16
 
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+## Download the kube-flanner yaml file
 
+curl -LO https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+## Edit the kube-flannel.yml file with the CIDR=192.168.0.0/16
+
+## Apply the kube-flannel.yml file to resolve coredns issue
+
+kubectl apply -f kube-flannel.yml
 ##coredn issue : https://github.com/kubernetes/kubernetes/issues/70202
 sudo tee /run/flannel/subnet.env <<EOF
 
