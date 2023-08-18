@@ -1,1 +1,1 @@
-once initialized where can i see the n/w cidr 
+How set up a new k8s cluster on a remote server
