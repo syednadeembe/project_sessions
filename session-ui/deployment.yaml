@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-production-service
+  labels:
+    app: myapp-production
+spec:
+  type: ClusterIP
+  selector:
+    app: myapp-production
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+      targetPort: 9000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-production-deployment
+  labels:
+    app: myapp-production
+spec:
+  selector:
+    matchLabels:
+      app: myapp-production
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: myapp-production
+    spec:
+      containers:
+      - name: myapp-production
+        image: myapp:productionImage
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9000
+        resources:
+          limits:
+            cpu: 10m
+          requests:
+            cpu: 10m
