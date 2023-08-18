@@ -1,0 +1,28 @@
+### create the Images with docker compose file
+docker-compose build --no-cache
+
+### deploy rbac first 
+kubectl apply -f  deployment_yamls/rbac.yaml
+
+### deploy database
+kubectl apply -f  deployment_yamls/dbase.yaml
+
+### login to database 
+kubectl exec -it <mongo pod> bash
+mongosh -u root -p root
+
+test> show databases
+admin   156.00 KiB
+config   60.00 KiB
+local    72.00 KiB
+
+use admin
+admin> show collections
+admin> db.usage.find().pretty()
+
+
+### deploy application
+kubectl apply -f  deployment_yamls/app.yaml
+
+### deploy UI
+kubectl apply -f  deployment_yamls/ui.yaml

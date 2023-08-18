@@ -1,0 +1,31 @@
+---
+# Service Account for MongoDB
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mongo-admin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mongo-admin-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: mongo-admin-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: mongo-admin
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: mongo-admin-role
+  apiGroup: rbac.authorization.k8s.io
