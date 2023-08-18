@@ -8,10 +8,10 @@ source venv/bin/activate
 pip3 install --no-cache-dir flask flask_restx
 flask run
 
-### this will start the webserver on 127.0.0.1:9000
-curl "http://localhost:9000/add?num1=5&num2=3" 
+### this will start the webserver on 127.0.0.1:5000
+curl "http://http://127.0.0.1:5000/add?num1=5&num2=3" 
 curl "http://127.0.0.1:5000/add?num1=5&num2=3" 
-curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 3}' http://localhost:9000/add
+curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 3}' http://127.0.0.1:5000/add
 
 curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 3}' http://127.0.0.1:5000/add
 
