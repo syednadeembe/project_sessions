@@ -6,7 +6,9 @@ import time
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+# Allow all origins, methods, and headers
+CORS(app, origins="*", allow_headers="*", supports_credentials=True)
+#CORS(app)
 
 _INF = float("inf")
 
