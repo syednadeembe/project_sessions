@@ -40,6 +40,13 @@ Password: prom-operator
 ### configure service monitoring ### for this to work the app image needs to be updated 
 kubectl apply -f example-myapp-production
 
+### customise promethus to only see your smon / endpoints, update this in the promethus object :
+  serviceMonitorNamespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: default
+  serviceMonitorSelector: {}
+
+
 ### configure HPA 
 kubectl autoscale deployment myapp-production-deployment --cpu-percent=50 --min=1 --max=5
 
