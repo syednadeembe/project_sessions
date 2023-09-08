@@ -1,6 +1,9 @@
 ###deploy the production deployments
 kubectl apply -f example-myapp-production/deployment.yaml
 
+###deploy the production deployments svc
+kubectl apply -f example-myapp-production/svc.yaml
+
 ###create nginx for testing
 kubectl run nginx --image=nginx
 
