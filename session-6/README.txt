@@ -31,6 +31,7 @@ kubectl expose service prometheus-grafana --type=NodePort --name=grafana-lb -n m
 edit the svc once created to use port 3000
 OR
 kubectl expose service prometheus-grafana --type=NodePort --name=grafana-lb --port=3000 --target-port=3000 -n monitoring
+kubectl expose service prometheus-kube-prometheus-prometheus --type=NodePort --name=prometheus-lb  -n monitoring
 
 curl localhost on the above NodePort
 Username: admin
