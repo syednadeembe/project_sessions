@@ -9,7 +9,7 @@ kubectl run nginx --image=nginx
 
 ###curl the myapp-production service from nginx prod
 kubectl exec -it nginx bash
-curl myapp-production-service.default.svc.cluster.local:9000
+curl myapp-production-service.default.svc.cluster.local:80
 
 ###helm 
 https://helm.sh/docs/intro/install/
