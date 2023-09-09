@@ -46,11 +46,14 @@ kubectl apply -f example-myapp-production
       kubernetes.io/metadata.name: default
   serviceMonitorSelector: {}
 
+### Before running HPA, metrics server should be installed if not present by default in your cluster
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
 ### configure HPA 
 kubectl autoscale deployment myapp-production-deployment --cpu-percent=50 --min=1 --max=5
 
 ### generate load 
 kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "count=0; while sleep 0.01; count=$((count+1)); do wget -q -O- http://myapp-production-service.default.svc.cluster.local:80; echo "\n"; done"
+
 
 
