@@ -1,5 +1,6 @@
 Session 0: Environment setup
-Project: Local setup as well as remote setup will be done for k8s cluster.
+Project: Requirement Details, what is that is needed from the team. We will draw the blue print of the itterations / Aglie based development appraoch. 
+Parallelly a Local setup as well as remote setup will be done for k8s cluster.
 
 Project: Installing and understanding architecture for docker, kubernetes, jenkins and setting up remote git repo and remote working server in AWS.
 Session 1: Creating the Base Image
