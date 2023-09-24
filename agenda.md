@@ -41,7 +41,7 @@ The project will emphasize best practices for logging, monitoring, and continuou
 **Project:** We will be creating required UI layer and Database layer to the project.
 Network will be configured for these layers and the integration for the 3 tier architecture will be set. The application code will also need to be changed to make the integration work. We will be setting up the environment with docker-compose first and then with k8s deployments.
 
-# [Session 7: 3 tier architecture deployment with UI, Apllication and Database components]()
+# [Session 7: 3 tier architecture deployment with UI, Apllication and Database components](https://github.com/syednadeembe/project_sessions/tree/main/session-7)
 **Project:** We will first do session-ui and session-backend to seperately understand the components and their network. All the components will be first deployed as isolated docker components and then we will put everything in as a release and manage it via release charts.
 Dry run and state session management will be checked. Component Network will be configured and End-point mapping will be set. RBAC's and Service accounts will be implmented within the project to implement component level security.
 
