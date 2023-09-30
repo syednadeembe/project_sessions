@@ -9,6 +9,17 @@ kubectl set image deployment/myapp-deployment myapp=myapp:productionImage
 kubectl patch pod myapp -p '{"spec":{"containers":[{"name":"myapp","image":"myapp:baseImage"}]}}'
 kubectl rollout history deployment/myapp-deployment --revision=<revision_no>
 
+###create a pod 
+kubectl apply -f myapp-base-pod.yaml
+###create a service to the pod
+kubectl apply -f myapp-base-service.yaml
+###explore the endpoints
+kubectl get endpoints
+###create another pod
+kubectl apply -f myapp-base-pod-replica.yaml
+###explore the endpoints
+kubectl get endpoints
+
 ###understand difference b/w service and endpoints
 ###why service has to be created and endpoints are auto-created
 kubectl create service clusterip myapp-service --tcp=9000:9000 --dry-run=client -ojson
