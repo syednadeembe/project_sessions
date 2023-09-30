@@ -19,8 +19,11 @@ spec:
           image: myapp:productionImage
           resources:
             requests:
-               memory: 100
-               cpu: 1
+               memory: "100Mi"
+               cpu: "500m"
+            limits:
+               memory: "100Mi"
+               cpu: "500m"
           ports:
             - containerPort: 9000
 
