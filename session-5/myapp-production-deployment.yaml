@@ -17,6 +17,10 @@ spec:
       containers:
         - name: myapp
           image: myapp:productionImage
+          resources:
+            requests:
+               memory: 100
+               cpu: 1
           ports:
             - containerPort: 9000
 
