@@ -83,3 +83,4 @@ https://www.loggly.com/ultimate-guide/using-journalctl/
 https://stackoverflow.com/questions/50833616/kube-flannel-cant-get-cidr-although-podcidr-available-on-node
 
 https://devops.stackexchange.com/questions/14891/cni0-already-has-an-ip-address
+
