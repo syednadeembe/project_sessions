@@ -48,7 +48,13 @@ kubectl apply -f example-myapp-production
 
 ### Before running HPA, metrics server should be installed if not present by default in your cluster
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-
+  # if READY value is 0/1 for deployment.apps/metrics-server after running  below command 
+  # kubectl get deploy -n kube-system
+  # then do following as per https://dev.to/docker/enable-kubernetes-metrics-server-on-docker-desktop-5434
+    # wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+    # add below arg at Deployment->spec->template->spec->args
+    # --kubelet-insecure-tls
+    
 ### configure HPA 
 kubectl autoscale deployment myapp-production-deployment --cpu-percent=50 --min=1 --max=5
 
