@@ -1,3 +1,5 @@
+Find Details about the projec here : https://www.devopswithsyed.com
+
 # [Session 0: Environment setup](https://github.com/syednadeembe/project_sessions/tree/main/session-0)
 **Project:** Requirement Details, what is that is needed from the team. We will draw the blue print of the iterations/Agile based development approach. 
 Parallelly a Local setup as well as remote setup will be done for k8s cluster.
