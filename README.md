@@ -1,4 +1,4 @@
-This is a Devops Project Road MAp, that takes a simple source code and implements most common Devops itterations to it.
+This is a Devops Project Road Map, that takes a simple source code and implements most common Devops itterations to it.
 Find Details about the project here : https://www.devopswithsyed.com and https://www.linkedin.com/feed/update/urn:li:activity:7122220432383967233/
 
 # [Session 0: Environment setup](https://github.com/syednadeembe/project_sessions/tree/main/session-0)
