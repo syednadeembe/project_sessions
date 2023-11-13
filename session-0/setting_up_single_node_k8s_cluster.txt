@@ -1,22 +1,29 @@
-## update the operating system
+Installation setups on AWS EC2
+############## setup requirements##################################################################
+//Instance Setting
+AMI location : amazon/al2023-ami-2023.2.20231030.1-kernel-6.1-x86_64
+AMI Name : al2023-ami-2023.2.20231030.1-kernel-6.1-x86_64
+AMI ID : ami-02e94b011299ef128
+Architecture : 64-bit (x86)
+Instance type : t2.medium
+Key pair login : enabled 
+
+//Network Setting
+VPC : that has Network Gateway
+Subnet : public ( route table to internet gatway )
+public-IP : enabled
+
+//Firewall Setting
+Inbound Rules : ssh from your IP 
+
+//Storage Setting
+20 GiB gp3 / gp2 
+############## ssh to the instance and run the following commands#################################
 sudo yum update -y
-
-## Install docker 
 sudo yum install -y docker
-
-## start the docker service
-sudo service docker start 
-or 
 sudo systemctl start docker
-
-## Enable docker service at system reboot
-
 sudo systemctl enable docker
-
-## Adding docker group to ec2-user for permissions to run docker 
 sudo usermod -aG docker ec2-user
-
-## Adding the kubernetes repo in order to install kubernetes using YUM
 sudo tee /etc/yum.repos.d/kubernetes.repo <<EOF
 [kubernetes]
 name=Kubernetes
@@ -27,25 +34,17 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
-
-## Install kubernetes Libraries
 sudo yum install -y kubelet-1.22.0 kubeadm-1.22.0 kubectl-1.22.0 --disableexcludes=kubernetes
-
-## Enable kubelet service
 sudo systemctl enable --now kubelet
-
-## Intialize the kubernetes cluster
-sudo kubeadm init --kubernetes-version=1.22.0 --pod-network-cidr=192.168.0.0/16
-
-## Download the kube-flanner yaml file
-
+sudo kubeadm init --kubernetes-version=1.22.0 --pod-network-cidr=10.244.0.0/16
 curl -LO https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-
-## Edit the kube-flannel.yml file with the CIDR=192.168.0.0/16
-
-## Apply the kube-flannel.yml file to resolve coredns issue
-
 kubectl apply -f kube-flannel.yml
+kubectl taint node `hostname` node-role.kubernetes.io/master:NoSchedule-
+################################################################################################
+
+############## Common Known Issues ####################################################################
+##amazon ami issue : https://github.com/amazonlinux/amazon-linux-2023/issues/528
+
 ##coredn issue : https://github.com/kubernetes/kubernetes/issues/70202
 sudo tee /run/flannel/subnet.env <<EOF
 
@@ -55,12 +54,6 @@ FLANNEL_MTU=1450
 FLANNEL_IPMASQ=true
 
 EOF
-
-##
-sudo kubeadm init --pod-network-cidr=10.17.0.0/16 --service-cidr=10.18.0.0/24 --kubernetes-version=1.22.0
-
-##
-kubectl taint node mymasternode node-role.kubernetes.io/master:NoSchedule-
 
 ##
 Error registering network: failed to acquire lease: subnet  specified in the flannel net config doesn't contain  PodCIDR of the  node
