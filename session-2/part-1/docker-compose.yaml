@@ -1,0 +1,20 @@
+version: '3.2'
+networks:
+  mynetwork:
+    driver: bridge 
+services:
+  base:
+    build:
+      context: .
+      dockerfile: Dockerfile.base
+    ports:
+      - "9002:9000"
+    image: myapp:baseImage
+    networks:
+      - mynetwork
+  nginx:
+    build: ./nginx 
+    ports:
+    - "8080:80"
+    networks:
+      - mynetwork
