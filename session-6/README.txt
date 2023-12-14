@@ -53,13 +53,10 @@ helm install prometheus prometheus-community/kube-prometheus-stack -n monitoring
 kubectl patch ds prometheus-prometheus-node-exporter --type "json" -p '[{"op": "remove", "path" : "/spec/template/spec/containers/0/volumeMounts/2/mountPropagation"}]'
 
 ### expose svc
-kubectl expose service prometheus-grafana --type=NodePort --name=grafana-lb -n monitoring
-edit the svc once created to use port 3000
-OR
 kubectl expose service prometheus-grafana --type=NodePort --name=grafana-lb --port=3000 --target-port=3000 -n monitoring
 kubectl expose service prometheus-kube-prometheus-prometheus --type=NodePort --name=prometheus-lb  -n monitoring
 
-curl localhost on the above NodePorts
+### curl localhost on the above NodePorts
 Username: admin
 Password: prom-operator 
 OR 
@@ -70,7 +67,20 @@ Password: admin
 kubectl apply -f example-myapp-production
 
 ### customise promethus to only see your smon / endpoints, update this in the promethus object :
+kubectl edit prom prometheus-kube-prometheus-prometheus -n monitoring 
+### replace the following code 
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector:
+    matchLabels:
+      release: prometheus
+### with the below section 
   serviceMonitorNamespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: default
   serviceMonitorSelector: {}
+### restart the prometheus-kube-prometheus-operator pod by deleting 
+### login to prometheus UI portails --> Status --> Targets 
+Re-Run the Load testing from HPA section 
+### revert the prom object back for Graphana to work once your are done.
+
+
