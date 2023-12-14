@@ -26,3 +26,7 @@ kubectl apply -f  deployment_yamls/app.yaml
 
 ### deploy UI
 kubectl apply -f  deployment_yamls/ui.yaml
+
+### secure-dbase-credentials
+kubectl delete -f deployment_yamls/dbase.yaml
+kubectl apply -f deployment_yamls/secure_dbase_deployment/dbase.yaml
