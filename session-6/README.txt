@@ -1,7 +1,7 @@
 ######################################################################################
 # Setup 
 ######################################################################################
-### Before running deployment make sure the images are persent in the system, use session-2/part-2 for building.
+###Before running deployment make sure the images are persent in the system, use session-2/part-2 for building.
 ###deploy the production deployments
 kubectl apply -f example-myapp-production/deployment.yaml
 
