@@ -1,7 +1,7 @@
 ######################################################################################
 # Setup 
 ######################################################################################
-###Before running deployment make sure the images are persent in the system, use session-2/part-2 for building.
+### Before running deployment make sure the images are persent in the system, use updated-image-with-metrics for building.
 ###deploy the production deployments
 kubectl apply -f example-myapp-production/deployment.yaml
 
@@ -59,9 +59,12 @@ OR
 kubectl expose service prometheus-grafana --type=NodePort --name=grafana-lb --port=3000 --target-port=3000 -n monitoring
 kubectl expose service prometheus-kube-prometheus-prometheus --type=NodePort --name=prometheus-lb  -n monitoring
 
-curl localhost on the above NodePort
+curl localhost on the above NodePorts
 Username: admin
-Password: prom-operator
+Password: prom-operator 
+OR 
+Username: admin
+Password: admin
 
 ### configure service monitoring ### for this to work the app image needs to be updated 
 kubectl apply -f example-myapp-production
