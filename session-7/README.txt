@@ -29,4 +29,7 @@ kubectl apply -f  deployment_yamls/ui.yaml
 
 ### secure-dbase-credentials
 kubectl delete -f deployment_yamls/dbase.yaml
+
+### create a mount folder on the local that pv can use, update the template with your location and also give k8s permission on the folder
+kubectl apply -f deployment_yamls/secure_dbase_deployment/pv.yaml
 kubectl apply -f deployment_yamls/secure_dbase_deployment/dbase.yaml
