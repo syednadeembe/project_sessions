@@ -20,6 +20,7 @@ Inbound Rules : ssh from your IP
 20 GiB gp3 / gp2 
 ############## ssh to the instance and run the following commands#################################
 sudo yum update -y
+sudo yum install git -y
 sudo yum install -y docker
 sudo systemctl start docker
 sudo systemctl enable docker
