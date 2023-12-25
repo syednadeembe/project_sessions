@@ -38,7 +38,7 @@ The project will demonstrate how to expose services to the outside world and ena
 # [Session 6: Monitoring, Logging, Pipelines and Scaling](https://github.com/syednadeembe/project_sessions/tree/main/session-6)
 **Project:** Implementing Monitoring Scaling and Pipelines 
 Students will configure monitoring using Prometheus and Grafana to collect and visualize metrics from their Kubernetes cluster.
-They will set up a CI/CD pipeline using a tool like GitLab CI/CD to automate the deployment of their application on Kubernetes.
+They will set up a CI/CD pipeline using a tool like GitLab/Jenkins CI/CD to automate the deployment of their application on Kubernetes.
 The project will emphasize best practices for logging, monitoring, and continuous deployment in a Kubernetes environment. We will also spend time in setting up metric-server and HPA.
 
 # [Session-ui](https://github.com/syednadeembe/project_sessions/tree/main/session-ui) [& Session-dbase:](https://github.com/syednadeembe/project_sessions/tree/main/session-dbase) [Adding UI and Mongo Database to the Project]()
