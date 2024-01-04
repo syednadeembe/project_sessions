@@ -1,7 +1,7 @@
-1. How set up a new k8s cluster on a remote server
-2. What are the static pods that come up even without the dns pod
-3. How to install CNI 
-4. What is needed for the container n/w to work
-5. Which all clients did you use to connect to the api-server
+1. How to set up a new Kubernetes cluster on a remote server?
+2. What are the static pods that come up even without the DNS pod?
+3. How to install CNI?
+4. What is needed for the container network to work?
+5. Which clients did you use to connect to the api-server?
 
 
