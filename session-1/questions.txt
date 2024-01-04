@@ -1,4 +1,4 @@
-1. Docker Architecture
-2. How to convert Application code into Dockerfile
-3. How to convert Dockerfile into Docker container
-4. Client to access docker resources 
+1. Docker Architecture?
+2. How to convert Application code into Dockerfile?
+3. How to convert Dockerfile into Docker container?
+4. Client to access Docker resources?
