@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: myapp
+spec:
+  selector:
+    run: nginx
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80

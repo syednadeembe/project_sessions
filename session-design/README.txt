@@ -5,8 +5,14 @@ kind create cluster --name devops-with-syed --config three-node-cluster-setup.ya
 kind get nodes --name devops-with-syed
 kubectl run pod1 --image=nginx
 kubectl run pod2 --image=nginx
-
-
+kubectl apply -f svc.yaml
+kubectl get ep 
+# notice the svc and pod are mapped inside endpoints 
+kubectl describe po pod1 | grep Node:
+# based on "Node" value edit the below command
+docker exec -it <Node> bash
+iptables -L KUBE-NODEPORTS -t nat
+# notice the IP mappings and firewalls, this is the the prime use for kube-proxy
 
 Part 2
 kubectl label nodes devops-with-syed-worker dbase=true
