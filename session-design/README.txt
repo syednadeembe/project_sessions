@@ -1,8 +1,14 @@
+Part 1
 # lab setup needs a 3 node cluster setup, I'm using Kind cluster.
 https://kind.sigs.k8s.io/docs/user/quick-start/#installation
-
 kind create cluster --name devops-with-syed --config three-node-cluster-setup.yaml
 kind get nodes --name devops-with-syed
+kubectl run pod1 --image=nginx
+kubectl run pod2 --image=nginx
+
+
+
+Part 2
 kubectl label nodes devops-with-syed-worker dbase=true
 # before running the below commands make sure that you have build the images from session-7
 kind load docker-image "mongo:latest" --name devops-with-syed
