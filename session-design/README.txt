@@ -1,8 +1,14 @@
+Part 1
 # lab setup needs a 3 node cluster setup, I'm using Kind cluster.
 https://kind.sigs.k8s.io/docs/user/quick-start/#installation
-
 kind create cluster --name devops-with-syed --config three-node-cluster-setup.yaml
 kind get nodes --name devops-with-syed
+kubectl run pod1 --image=nginx
+kubectl run pod2 --image=nginx
+
+
+
+Part 2
 kubectl label nodes devops-with-syed-worker dbase=true
 # before running the below commands make sure that you have build the images from session-7
 kind load docker-image "mongo:latest" --name devops-with-syed
@@ -30,5 +36,8 @@ kubectl get po -o wide | grep ui-deploy
 
 Exercise 4 : apply HPA on ui-deployment and see what happness, with max limit as 5
 # for HPA reference see session-6 content
+<<<<<<< HEAD
 
 Clean Up: kind delete cluster --name devops-with-syed
+=======
+>>>>>>> bec79ca47588054051ed353881a4195baa989b81
