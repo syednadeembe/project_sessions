@@ -30,3 +30,5 @@ kubectl get po -o wide | grep ui-deploy
 
 Exercise 4 : apply HPA on ui-deployment and see what happness, with max limit as 5
 # for HPA reference see session-6 content
+
+Clean Up: kind delete cluster --name devops-with-syed

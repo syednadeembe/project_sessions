@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus: prometheus-service
+    role: alert-rules
+  name: prometheus-k8s-custom-alerting-rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: alert-cpu
+    rules:
+    - alert: PodCPUUsageTooHigh
+      annotations:
+        message: "Pod CPU usage is too high"
+        description: "CPU usage for pod {{ $labels.pod }} in namespace {{ $labels.namespace }} exceeds 30% of its limits."
+      expr: '(sum(rate(container_cpu_usage_seconds_total{namespace="default", pod=~"myapp-production-.*"}[1m])) / sum(kube_pod_container_resource_limits{namespace="default", pod=~"myapp-production-.*"})) * 100 > 10'
+      for: 1m
+      labels:
+        severity: critical
