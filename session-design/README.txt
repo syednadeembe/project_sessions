@@ -6,6 +6,9 @@ kind get nodes --name devops-with-syed
 kubectl run pod1 --image=nginx
 kubectl run pod2 --image=nginx
 kubectl apply -f svc.yaml
+kubectl exec -it pod2 bash
+curl myapp.default.svc.cluster.local 
+# notice the dns is mapping to pod and firewall is allowing traffic, this is the prime use for core-dns 
 kubectl get ep 
 # notice the svc and pod are mapped inside endpoints 
 kubectl describe po pod1 | grep Node:
