@@ -2,7 +2,11 @@
 ### connecting via curl, to make this work you need to have the token or certs
 ### connecting via client, to make this work you need to have either token or kubeconfig
 
-################################ connecting via curl ################################
+################################ connecting via kubectl ################################
+https://kubernetes.io/docs/reference/kubectl/
+https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/
+
+################################ connecting via curl ###################################
 ### Step to access via curl with certs
 
 cat  /Users/syednadeem/.kube/config |grep client-certificate-data | awk -F ' ' '{print $2}' |base64 -d > client-cert.pem
@@ -45,13 +49,18 @@ EOF
 
 curl -X DELETE http://localhost:8001/api/v1/namespaces/default/pods/busybox-pod
 
-################################ connecting via client ################################
+################################ connecting via client ###################################
 
-###For python_code we need to have required bundles installed in the server
+### For python_code we need to have required bundles installed in the server
+### Make sure python3 is installed on the server
+cd session-api-server/python_code
 pip3 install kubernetes
 python3 list_pods.py
 
-###For go_code you can run the code or create an executable and then run the executable from anywhere
+### For go_code you can run the code or create an executable and then run the executable from anywhere
+### However you need to have go installed
+cd session-api-server/go_code
+go mod init get_pods
 go mod tidy
-go run ./main.go
-go build ./main.go -o get_all_pods
+go run main.go
+go build  -o get_all_pods
