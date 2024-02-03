@@ -8,7 +8,8 @@ https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/
 
 ################################ connecting via curl ###################################
 ### Step to access via curl with certs
-
+cd session-api-server
+kubectl apply -f curl_code
 cat  /Users/syednadeem/.kube/config |grep client-certificate-data | awk -F ' ' '{print $2}' |base64 -d > client-cert.pem
 cat  /Users/syednadeem/.kube/config |grep client-key-data | awk -F ' ' '{print $2}' |base64 -d > client-key.pem
 APISERVER=`cat  /Users/syednadeem/.kube/config |grep server | awk -F ' ' '{print $2}'`
