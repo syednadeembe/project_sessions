@@ -1,3 +1,5 @@
+############################## do this after session-0 #################################
+
 ### connecting via kubectl, to make this work you need to have a kubeconfig file
 ### connecting via curl, to make this work you need to have the token or certs
 ### connecting via client, to make this work you need to have either token or kubeconfig

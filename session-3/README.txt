@@ -1,8 +1,20 @@
-This is a whiteboard session which the focus on the issues with the existing iterations of the software.
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
-Iteration 1 : delivering the software on the remote VM via directly building and deploying 
-Iteration 2 : we create the docker container of the application and deploy that on a DE
-Iteration 3 : we modify the building and deploying process via docker-compose and understand the concept of multi-stage build
-Iteration 4 : application is deployed as a pod on a k8s cluster
-Iteration 5 : application is managed by Helm and ks controller's 
-Iteration 6 : monitoring and pipelines and configured for the application with deployment statergies 
+# part-1
+# understand how docker networking and scaling works
+# understand the user of docker-compose and multi-stage build wrt management and security
+cd part-1
+docker-compose build
+docker-compose up -d 
+docker-compose ps
+docker-compose up -d --scale <service_name>=2 
+
+#part-2
+# understand how one has to create a self managed load balancer in docker
+docker-compose build <service_name>
+docker-compose up <service_name>
+
+##clean up 
+docker rm -vf $(docker ps -aq)
+docker rmi -f $(docker images -aq)
