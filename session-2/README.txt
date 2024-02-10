@@ -36,15 +36,18 @@ docker inspect $myflaskID | grep IPAddress
 ### stop all running containers from this Lab
 
 docker network create appnetwork
+docker create network appnetwork
 docker run -p 9000:9000 --hostname myapp --name myapp --network appnetwork myflaskapp &
 docker run -it --rm -p 80:80 --network appnetwork mynginx bash
+### login to the nginx pod and curl the application server on the hostname ---> this wont work
+### hostname of our app is myapp
 cat /etc/resolv.conf
 
 Lab Content - Docker storage
 docker run -it --rm -p 80:80 --network appnetwork mynginx bash
 cd /opt
-mkdir logfolder
-cd logfolder
+mkdir testfolder
+cd testfolder
 echo "container-1 updates" >> logs.txt
 ### exit the container and re-run mynginx container ---> logs.txt and the folder will be deleted
 
@@ -53,13 +56,13 @@ echo "container-1 updates" >> logs.txt
 docker volume create nginx-volume 
 docker run -it --rm -p 80:80 -v nginx-volume:/opt/testfolder --network appnetwork mynginx bash
 cd /opt
-mkdir logfolder
-cd logfolder
+mkdir testfolder
+cd testfolder
 echo "container-1 updates" >> logs.txt
 
 ### (terminal-2)
 docker run -it --rm -p 81:80 -v nginx-volume:/opt/testfolder --network appnetwork mynginx bash
-cd /opt/logfolder
+cd /opt/testfolder
 cat logs.txt
 
 
