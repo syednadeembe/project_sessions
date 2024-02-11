@@ -5,7 +5,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 # understand how docker networking and scaling works from the last session and corelate 
 # understand the user of docker-compose and multi-stage build wrt management and security
 cd part-1
-docker build -t myflaskapp .
+docker build -t myflaskapp -f Dockerfile.base .
 # try to create multiple replication for HA
 #( terminal-1 )
 docker run -p 9000:9000  --name myapp-1 myflaskapp
@@ -13,15 +13,16 @@ docker run -p 9000:9000  --name myapp-1 myflaskapp
 docker run -p 9000:9000  --name myapp-2 myflaskapp---> this command will fail
 docker rm myapp-2
 docker run -p 9001:9000  --name myapp-2 myflaskapp
-# port management user resposibility 
-# security is user resposibility 
-# scaling is user resposibility 
-# load-balancing is user resposibility
-# service discovery is user resposibility 
+# port management devops resposibility 
+# security is devops resposibility 
+# scaling is devops resposibility 
+# load-balancing is devops resposibility
+# service discovery is devops resposibility 
 # orchestration of application microservices ( UI, APP, DBase ) ( network ) etc, is user resposibility
 #( terminal-3 )
 docker stop myapp-1 myapp-2
 docker rm myapp-1 myapp-2
+# you should be in folder : part-1 
 docker-compose build
 docker-compose up -d 
 docker-compose ps
