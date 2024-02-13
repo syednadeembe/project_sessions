@@ -1,3 +1,4 @@
+CD : Session 
 Part 1
 # lab setup needs a 3 node cluster setup, I'm using Kind cluster.
 https://kind.sigs.k8s.io/docs/user/quick-start/#installation
