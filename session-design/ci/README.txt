@@ -22,7 +22,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo su -s /bin/bash jenkins 
 whoami
 docker ps 
-cd /opt
+cd ~
 git clone https://github.com/syednadeembe/project_sessions.git
 cd session-1
 docker build -t myflaskapp .
