@@ -6,6 +6,14 @@ Find Details about the project here: https://www.devopswithsyed.com and https://
 **Project:** Requirement Details, what is that is needed from the team. We will draw the blueprint of the iterations/Agile based development approach. 
 Parallelly a local setup as well as remote a setup will be done for Kubernetes cluster.
 
+# [Session 0: Kubernetes Architecture](https://github.com/syednadeembe/project_sessions/tree/main/session-api-server)
+**Project:** A deep dive into Kubernetes Architecture and Kubernetes controle-plane and Kubernetes  resources, with the focus on k8s client-server communitcation and component break down. Students will connect to the api-server via the following:
+1. kubectl client
+2. cli 
+3. browser 
+4. code : java, python and go-client
+5. binary
+
 **Project:** Installing and understanding architecture for Docker, Kubernetes, Jenkins, and setting up remote git repo and remote working server in AWS.
 # [Session 1: Creating the Base Image](https://github.com/syednadeembe/project_sessions/tree/main/session-1)
 **Project:** Students will Dockerize a simple web application, such as a Flask or Node.js app.
