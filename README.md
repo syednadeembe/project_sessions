@@ -12,16 +12,16 @@ Parallelly a local setup as well as remote a setup will be done for Kubernetes c
 They will create a Dockerfile to build the application image and run it as a container.
 The project will include steps to test the container locally and ensure it functions as expected.
 
-# [Session 2: Docker Compose and Multi-Stage Builds](https://github.com/syednadeembe/project_sessions/tree/main/session-2)
+# [Session 2: Introduction to Docker](https://github.com/syednadeembe/project_sessions/tree/main/session-2)
+**Project:** Setting Up a Local Docker setup
+Students will use the Docker setup , they will deploy and manage sample applications and verify its successful deployment and functioning on the setup.
+The session will focus on understanding the Docker architecture and using docker commands for management.
+
+# [Session 3: Docker Compose and Multi-Stage Builds](https://github.com/syednadeembe/project_sessions/tree/main/session-3)
 **Project:** Containerizing a Microservices Architecture
 Students will containerize a microservices-based application using Docker Compose.
 They will define multiple services for each microservice and establish communication between them.
 The project will involve creating a Docker Compose YAML file and running the application locally using Docker Compose.
-
-# [Session 3: Introduction to Kubernetes](https://github.com/syednadeembe/project_sessions/tree/main/session-3)
-**Project:** Setting Up a Local Kubernetes Cluster
-Students will use the Kubernetes cluster, they will deploy and manage sample applications and verify its successful deployment and functioning on the cluster.
-The project will focus on understanding the Kubernetes architecture and using kubectl commands for cluster management.
 
 # [Session 4: Deploying Microservices with Kubernetes](https://github.com/syednadeembe/project_sessions/tree/main/session-4)
 **Project:** Deploying Microservices on Kubernetes
@@ -49,5 +49,9 @@ The Network will be configured for these layers and the integration for the 3-ti
 **Project:** We will first do session-ui and session-backend to separately understand the components and their network. All the components will be first deployed as isolated docker components and then we will put everything in as a release and manage it via release charts.
 Dry run and state session management will be checked. Component Network will be configured and End-point mapping will be set. RBAC's and Service accounts will be implemented within the project to implement component-level security.
 
-# [Debug Session]()
-**Project:** We will inject a fault into the setup created in last 7 sessions and see what are the best and proper isolation techniques. We will be isolating application issues, container issues, cluster issues, and network issues from one another. 
+# [Design Session]()
+**Project:** This session is very important for the students and this is where we will understand the fundamental of the following:
+1. continuous integration : with jenkins
+2. continuous deployment : fluxcd / argocd
+3. continuous delivery : with jenkins
+4. promotion process : dev,qa,stage and production
