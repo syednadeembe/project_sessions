@@ -10,7 +10,9 @@ kubectl get endpoints
 
 ###download the ingress ngix-controller 
 curl -LO https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/baremetal/deploy.yaml
+kubectl apply -f deploy.yaml
 
+###read more about the controller here
 https://kubernetes.github.io/ingress-nginx/deploy/
 
 ###apply the ingress-controller-objects
@@ -30,10 +32,11 @@ kubectl logs -f deployment/ingress-nginx-controller
 ###open another terminal 
 
 ###get the ingress-nginx controller IP 
-k get svc -n ingress-nginx | grep -e "ingress-nginx-controller"
+kubectl get svc -n ingress-nginx | grep -e "ingress-nginx-controller"
 
 ###Run a dummy pod for validation
 kubectl run nginx --image=nginx
+kubectl exec -it nginx bash
 echo "<ingress-nginx-controller-IP>       myapp.local" >> /etc/hosts
 echo "10.99.132.189       myapp.local" >> /etc/hosts
 curl myapp.local/base
