@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-app
+spec:
+  podSelector:
+    matchLabels:
+      app: mongo
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: calculator-app
+
