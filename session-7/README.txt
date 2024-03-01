@@ -1,8 +1,8 @@
 ### create the Images with docker compose file
 docker-compose build --no-cache
 
-### deploy rbac first 
-kubectl apply -f  deployment_yamls/rbac.yaml
+### deploy netpol first 
+kubectl apply -f  deployment_yamls/netpol.yaml
 
 ### deploy database
 kubectl apply -f  deployment_yamls/dbase.yaml
