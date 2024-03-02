@@ -4,6 +4,9 @@ docker-compose build --no-cache
 ### deploy netpol first 
 kubectl apply -f  deployment_yamls/netpol.yaml
 
+### deploy rbac
+kubectl apply -f  deployment_yamls/rbac.yaml
+
 ### deploy database
 kubectl apply -f  deployment_yamls/dbase.yaml
 
