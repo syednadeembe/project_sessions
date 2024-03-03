@@ -59,9 +59,14 @@ kubectl apply -f pod-with-worker2-toleration.yaml
 
 Exercise 6 : affinity and antiaffinity
 kubectl apply -f pod-with-affinity.yaml --> this wont work, understand why
-Rest the cluster or 
+# Rest the cluster or 
 kubectl delete -f taint-for-worker.yml
 kubectl delete -f taint-for-worker2.yml
 kubectl apply -f taint-for-master-node.yaml
 kubectl apply -f pod-with-affinity.yaml
 kubectl apply -f pods-with-antiaffinity.yaml
+
+Exercise 7 : probs
+docker build -t myapp:productionImage_app .
+kubectl apply -f probs.yaml --> this wont work, understand why
+
