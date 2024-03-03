@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anti-affinity-pod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: anti-affinity-pod
+  template:
+    metadata:
+      labels:
+        app: anti-affinity-pod
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - anti-affinity-pod
+            topologyKey: "kubernetes.io/hostname"

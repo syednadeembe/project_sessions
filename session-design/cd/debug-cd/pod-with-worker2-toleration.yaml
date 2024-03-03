@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-pod
+  labels:
+    app: DB
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  tolerations:
+  - key: db-only
+    operator: Exists
+    effect: NoSchedule

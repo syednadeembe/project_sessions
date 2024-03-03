@@ -46,8 +46,22 @@ kubectl get po -o wide | grep ui-deploy
 
 Exercise 4 : apply HPA on ui-deployment and see what happness, with max limit as 5
 # for HPA reference see session-6 content
-<<<<<<< HEAD
 
-Clean Up: kind delete cluster --name devops-with-syed
-=======
->>>>>>> bec79ca47588054051ed353881a4195baa989b81
+Exercise 5 : taints and tolerations
+
+kubectl get nodes -o json | jq '.items[].spec.taints'
+kubectl apply -f taint-for-master-node.yaml
+kubectl apply -f pod-with-master-toleration.yaml
+kubectl apply -f taint-for-worker.yml
+kubectl apply -f pod-with-worker-toleration.yaml
+kubectl apply -f taint-for-worker2.yml
+kubectl apply -f pod-with-worker2-toleration.yaml
+
+Exercise 6 : affinity and antiaffinity
+kubectl apply -f pod-with-affinity.yaml --> this wont work, understand why
+Rest the cluster or 
+kubectl delete -f taint-for-worker.yml
+kubectl delete -f taint-for-worker2.yml
+kubectl apply -f taint-for-master-node.yaml
+kubectl apply -f pod-with-affinity.yaml
+kubectl apply -f pods-with-antiaffinity.yaml
