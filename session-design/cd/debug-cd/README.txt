@@ -27,27 +27,27 @@ kind load docker-image "myapp:productionImage_ui" --name devops-with-syed
 
 Exercise 1 : identifying the issues with the deployment from events or deployment 
 kubectl apply -f rbac.yaml 
-kubectl apply -f dbase.yaml  ### this pod will be in running state
-kubectl apply -f app-deployment.yaml 
-kubectl apply -f ui-deployment.yaml
+kubectl apply -f dbase.yaml  ### this pod will not be in running state
+kubectl apply -f app-deployment.yaml ### this pod will not be in running state
+kubectl apply -f ui-deployment.yaml ### this pod will be in running state
 kubectl get pods 
 # one pod will be in pending state 
 kubectl label nodes devops-with-syed-worker2 app=true
+kubectl get pods ### understand why app pod is crashing 
+kubectl label nodes devops-with-syed-worker2 dbase=true
 kubectl get pods
 # all pods will be in running state
 
-Exercise 2 : apply HPA on App deployment and see what happness, with max limit as 5
-# for HPA reference see session-6 content
-
-Exercise 3 : apply antiafinity on ui-deployment and see what happness
+Exercise 2 : apply antiafinity on ui-deployment and see what happness
 kubectl scale deployment ui-deployment --replicas=3
 kubectl get po -o wide | grep ui-deploy 
 # explain why only two replications are running and why is 3rd one in pending state 
 
-Exercise 4 : apply HPA on ui-deployment and see what happness, with max limit as 5
-# for HPA reference see session-6 content
+Exercise 3 : Affinity & Antiafinity Effect on HPA
+kubectl autoscale deployment calculator-app-deployment --cpu-percent=50 --min=2 --max=5
+kubectl autoscale deployment ui-deployment --cpu-percent=50 --min=2 --max=5
 
-Exercise 5 : taints and tolerations
+Exercise 4 : taints and tolerations
 
 kubectl get nodes -o json | jq '.items[].spec.taints'
 kubectl apply -f taint-for-master-node.yaml
@@ -57,7 +57,7 @@ kubectl apply -f pod-with-worker-toleration.yaml
 kubectl apply -f taint-for-worker2.yml
 kubectl apply -f pod-with-worker2-toleration.yaml
 
-Exercise 6 : affinity and antiaffinity
+Exercise 5 : affinity and antiaffinity
 kubectl apply -f pod-with-affinity.yaml --> this wont work, understand why
 # Rest the cluster or 
 kubectl delete -f taint-for-worker.yml
@@ -66,7 +66,7 @@ kubectl apply -f taint-for-master-node.yaml
 kubectl apply -f pod-with-affinity.yaml
 kubectl apply -f pods-with-antiaffinity.yaml
 
-Exercise 7 : probs
+Exercise 6 : probs
 docker build -t myapp:productionImage_app .
 kubectl apply -f probs.yaml --> this wont work, understand why
 
