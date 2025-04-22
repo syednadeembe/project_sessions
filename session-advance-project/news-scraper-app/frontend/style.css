@@ -1,0 +1,21 @@
+body {
+  font-family: Arial;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+.container {
+  max-width: 600px;
+  margin: auto;
+}
+input {
+  width: 60%;
+  padding: 8px;
+}
+button {
+  padding: 8px 12px;
+  margin-left: 5px;
+}
+#results, #history {
+  margin-top: 20px;
+}
+

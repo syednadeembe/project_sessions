@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Management</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="form-section">
+      <h2>Add a new product</h2>
+      <form id="product-form">
+        <input type="text" id="name" placeholder="Product Name" required />
+        <input type="number" id="price" placeholder="Product Price" required />
+        <input type="text" id="details" placeholder="Product Details" required />
+        <select id="category" required>
+          <option value="">Product Category</option>
+          <option value="Books">Books</option>
+          <option value="Home Appliance">Home Appliance</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Toys">Toys</option>
+          <option value="Kitchen">Kitchen</option>
+        </select>
+        <input type="number" id="quantity" placeholder="Product Quantity" required />
+        <button type="submit">Add</button>
+      </form>
+    </div>
+
+    <div class="list-section">
+      <h2>Inventory Product Details</h2>
+      <h3>Existing Products</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th>Product Quantity</th>
+            <th>Action</th> <!-- New -->
+          </tr>
+        </thead>
+        <tbody id="product-list"></tbody>
+      </table>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

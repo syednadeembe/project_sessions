@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Price Tracker</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f2f2f2; }
+        .container { background-color: white; padding: 20px; max-width: 500px; margin: auto; border-radius: 10px; box-shadow: 0px 0px 10px #ccc; }
+        h2 { text-align: center; }
+        label, select, input { width: 100%; margin: 10px 0; padding: 8px; }
+        .result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Stock Price Checker</h2>
+    <form method="POST">
+        <label>Share Ticker:</label>
+        <input type="text" name="ticker" required>
+
+        <label>Country:</label>
+        <select name="country">
+            <option value="india">India</option>
+            <option value="us">US</option>
+        </select>
+
+        <button type="submit">Get Stock Info</button>
+    </form>
+
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    {% if stock_info %}
+    <div class="result">
+        <h3>{{ stock_info.longName }} ({{ stock_info.symbol }})</h3>
+        <p><strong>Current Price:</strong> {{ stock_info.currentPrice }} {{ stock_info.currency }}</p>
+        <p><strong>Previous Close:</strong> {{ stock_info.previousClose }}</p>
+        <p><strong>Market Cap:</strong> {{ stock_info.marketCap }}</p>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
+
