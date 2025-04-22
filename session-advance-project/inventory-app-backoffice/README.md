@@ -38,8 +38,9 @@ A simple and modern inventory management system built for e-commerce backend tea
 │   ├── index.html
 │   ├── styles.css
 │   └── app.js
-├── nginx/
-│   └── nginx.conf
+│   └── nginx.config
+├── mongo-init/
+│   └── init.js
 ├── docker-compose.yml
 └── README.md
 ```
