@@ -1,0 +1,6 @@
+1. Why should one use k8s cluster when docker-compose can do the same tasks ?
+2. What is a pod and how is it different from a container ?
+3. What is replica set ?
+4. What is deployment and how is it different from replica set ?
+5. What are controller managers ?
+6. How does k8s manage loadbalancing ?

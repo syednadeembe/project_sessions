@@ -1,0 +1,4 @@
+1. What is a 3 tire application design & how does it work ?
+2. What is the difference between hosting an application and web application ?
+3. Why are docker containers preferred over service based installations ?
+4. Explain Dockerfile workflow ?
