@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Image Classifier</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 40px;
+      background: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    .preview {
+      margin-top: 20px;
+    }
+    img {
+      max-width: 300px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Upload an Image for Classification</h1>
+  <form id="upload-form">
+    <input type="file" id="file-input" name="file" accept="image/*" required>
+    <br><br>
+    <button type="submit">Predict</button>
+  </form>
+
+  <div class="preview" id="preview"></div>
+  <div id="result"></div>
+
+  <script>
+    const form = document.getElementById("upload-form");
+    const fileInput = document.getElementById("file-input");
+    const preview = document.getElementById("preview");
+    const result = document.getElementById("result");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      result.textContent = "Loading prediction...";
+
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      // Preview the image
+      const reader = new FileReader();
+      reader.onload = () => {
+        preview.innerHTML = `<img src="${reader.result}" alt="Preview">`;
+      };
+      reader.readAsDataURL(file);
+
+      // Send to API
+      try {
+        const res = await fetch("/predict", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json();
+        result.innerHTML = `<h3>Prediction: ${data.class}</h3>`;
+      } catch (err) {
+        result.innerHTML = "<span style='color:red;'>Error predicting image</span>";
+      }
+    });
+  </script>
+</body>
+</html>
+
