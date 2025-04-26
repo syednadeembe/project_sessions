@@ -2,20 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>News Search</title>
+  <title>News Scraper</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>News Search</h1>
-    <input type="text" id="searchInput" placeholder="Enter topic">
-    <button onclick="searchNews()">Search</button>
-    <button onclick="getHistory()">Show History</button>
 
-    <div id="results"></div>
-    <div id="history"></div>
+<div class="page-container">
+
+  <div class="search-box">
+    <h1 class="logo">
+      <span class="blue">N</span>
+      <span class="red">e</span>
+      <span class="yellow">w</span>
+      <span class="blue">s</span>
+      <span class="green">S</span>
+      <span class="red">c</span>
+      <span class="yellow">r</span>
+      <span class="blue">a</span>
+      <span class="green">p</span>
+      <span class="red">e</span>
+      <span class="yellow">r</span>
+    </h1>
+    <input type="text" id="searchInput" placeholder="Search News...">
+    <div class="button-group">
+      <button onclick="searchNews()">Search</button>
+      <button onclick="getHistory()">View History</button>
+    </div>
   </div>
-  <script src="app.js"></script>
+
+  <div id="loader" class="loader" style="display:none;"></div>
+
+  <div id="results" class="results-section"></div>
+
+  <div id="history" class="history-section"></div>
+
+  <footer class="info-footer">
+    <p><a href="#" id="infoLink" onclick="toggleInfo()">ℹ️ Information</a></p>
+    <div id="infoDetails" style="display: none; margin-top: 20px;">
+      <h3>About This News Scraper</h3>
+      <p><strong>Search Engine Used:</strong> We scrape Bing News results using BeautifulSoup (Python library).</p>
+      <p><strong>Frontend:</strong> HTML, CSS, JavaScript frontend, styled like Google's homepage.</p>
+      <p><strong>Backend:</strong> FastAPI server handles search, checks MongoDB cache first, scrapes if needed.</p>
+      <p><strong>Database:</strong> MongoDB persists all search queries and scraped results for fast reuse.</p>
+      <p><strong>Setup Workflow:</strong> The entire system runs via Docker Compose: frontend (Nginx), backend (FastAPI), database (MongoDB).</p>
+      <p><strong>Learning Outcome:</strong> Teaches students full-stack concepts: frontend UI, API integration, scraping, caching, containerization.</p>
+    </div>
+  </footer>
+  
+
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>

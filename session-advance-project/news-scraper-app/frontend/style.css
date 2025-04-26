@@ -1,21 +1,147 @@
-body {
-  font-family: Arial;
-  padding: 20px;
-  background-color: #f5f5f5;
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #f0f2f5, #f9fbfd);
+  font-family: Arial, sans-serif;
 }
-.container {
-  max-width: 600px;
-  margin: auto;
+
+.page-container {
+  min-height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
-input {
-  width: 60%;
-  padding: 8px;
+
+.search-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
 }
-button {
-  padding: 8px 12px;
-  margin-left: 5px;
+
+.logo {
+  font-size: 60px;
+  font-weight: normal;
+  font-family: 'Poppins', Arial, sans-serif;
 }
-#results, #history {
+
+.logo .blue {
+  color: #4285F4;
+}
+
+.logo .red {
+  color: #EA4335;
+}
+
+.logo .yellow {
+  color: #FBBC05;
+}
+
+.logo .green {
+  color: #34A853;
+}
+
+
+input[type="text"] {
+  width: 50%;
+  padding: 14px;
+  font-size: 18px;
+  border: 1px solid #dfe1e5;
+  border-radius: 24px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #4285F4;
+}
+
+.button-group {
   margin-top: 20px;
+}
+
+button {
+  background: #4285F4;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #3367d6;
+}
+
+.results-section, .history-section {
+  width: 60%;
+  margin: 30px auto;
+  text-align: left;
+}
+
+.results-section h2, .history-section h2 {
+  font-size: 24px;
+  color: #4285F4;
+  margin-bottom: 20px;
+}
+
+.news-card {
+  padding: 15px;
+  border-bottom: 1px solid #dadce0;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.news-card:hover {
+  background-color: #f1f3f4;
+}
+
+.news-card a {
+  font-size: 18px;
+  color: #1a0dab;
+  text-decoration: none;
+}
+
+.news-card a:hover {
+  text-decoration: underline;
+}
+
+footer.info-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #70757a;
+  margin-top: auto;
+  background-color: #f1f3f4;
+  border-top: 1px solid #dadce0;
+}
+
+footer.info-footer a {
+  text-decoration: none;
+  color: #4285F4;
+  font-weight: bold;
+}
+
+footer.info-footer a:hover {
+  text-decoration: underline;
+}
+
+#infoDetails {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #333;
+}
+
+#infoDetails h3 {
+  color: #4285F4;
 }
 
