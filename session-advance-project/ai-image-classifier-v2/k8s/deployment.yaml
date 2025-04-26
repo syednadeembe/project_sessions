@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-image-classifier
+  labels:
+    app: ai-image-classifier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-image-classifier
+  template:
+    metadata:
+      labels:
+        app: ai-image-classifier
+    spec:
+      containers:
+      - name: ai-image-classifier
+        image: your-dockerhub-username/ai-image-classifier:latest  # <-- Change this!
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+
