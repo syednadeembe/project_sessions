@@ -15,11 +15,14 @@ kubectl apply -f curl_code
 cat  /Users/syednadeem/.kube/config |grep client-certificate-data | awk -F ' ' '{print $2}' |base64 -d > client-cert.pem
 cat  /Users/syednadeem/.kube/config |grep client-key-data | awk -F ' ' '{print $2}' |base64 -d > client-key.pem
 APISERVER=`cat  /Users/syednadeem/.kube/config |grep server | awk -F ' ' '{print $2}'`
+echo $APISERVER
 curl --cert client-cert.pem --key client-key.pem -k $APISERVER/api/v1/namespaces
 curl --cert client-cert.pem --key client-key.pem -k $APISERVER/api/v1/namespaces/default/pods
+curl --cert client-cert.pem --key client-key.pem -k $APISERVER/api/v1/namespaces/default/pods | jq -r '.items[].metadata.name'
 
 ### Steps to access via curl with token
 TOKEN=`kubectl get secret  my-service-account-token -o jsonpath='{.data.token}' | base64 --decode`
+echo $TOKEN
 curl -k $APISERVER/api/v1/namespaces/default/pods --header "Authorization: Bearer $TOKEN"
 
 ### Make use of kubectl proxy
@@ -57,8 +60,16 @@ curl -X DELETE http://localhost:8001/api/v1/namespaces/default/pods/busybox-pod
 ### For python_code we need to have required bundles installed in the server
 ### Make sure python3 is installed on the server
 cd session-api-server/python_code
-pip3 install kubernetes
+
+### Depending upon the operating system the below commands will change
+### Following is what works on mac and linux 
+python3 -m venv venv
+source venv/bin/activate
+pip install kubernetes
+### The above command just activate a virtual environment and now you can run the below command 
 python3 list_pods.py
+### Deactivate the virtaul environment once done with the below command 
+deactivate
 
 ### For go_code you can run the code or create an executable and then run the executable from anywhere
 ### However you need to have go installed
