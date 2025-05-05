@@ -29,7 +29,12 @@ curl "http://127.0.0.1:5000/add?num1=5&num2=3"
 curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 3}' http://127.0.0.1:5000/add
 curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 3}' http://127.0.0.1:5000/add
 
-
+### Docker Installation 
+yum update -y
+yum install -y docker
+systemctl start docker
+systemctl enable docker
+usermod -aG docker ec2-user
 ### to run the application on docker container
 docker build -t myflaskapp .
 docker run -p 9000:9000 myflaskapp
