@@ -78,3 +78,31 @@ go mod init get_pods
 go mod tidy
 go run main.go
 go build  -o get_all_pods
+
+
+
+# 1. Remove old version (optional but clean)
+sudo dnf remove golang -y
+
+# 2. Download and install latest Go manually (1.24.1 as of now)
+cd /usr/local
+sudo curl -OL https://go.dev/dl/go1.24.1.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.24.1.linux-amd64.tar.gz
+sudo rm -f go1.24.1.linux-amd64.tar.gz
+
+# 3. Set PATH (permanently by editing /etc/profile.d/go.sh or ~/.bashrc)
+export PATH=/usr/local/go/bin:$PATH
+
+# 4. Verify
+go version
+
+🔗 GoLang client-go to access Kubernetes (by TechWorld with Nana)
+
+Running from Remote Linux Machine
+scp -P 2222 root@localhost:/root/project_sessions/session-api-server/go_code/get_all_pods .
+scp -v -P 2222 root@localhost:/root/.kube/config .
+
+
+cp  /home/shakil/.kube/config  /home/shakil/.kube/config-back
+cp config  /home/shakil/.kube/config
+./get_all_pods
