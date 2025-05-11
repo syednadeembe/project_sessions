@@ -36,10 +36,9 @@ docker inspect $myflaskID | grep IPAddress
 ### stop all running containers from this Lab
 
 docker network create appnetwork
-docker create network appnetwork
 docker run -p 9000:9000 --hostname myapp --name myapp --network appnetwork myflaskapp &
 docker run -it --rm -p 80:80 --network appnetwork mynginx bash
-### login to the nginx pod and curl the application server on the hostname ---> this wont work
+### login to the nginx pod and curl the application server on the hostname ---> this will work
 ### hostname of our app is myapp
 cat /etc/resolv.conf
 
