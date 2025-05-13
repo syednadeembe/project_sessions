@@ -80,7 +80,7 @@ go run main.go
 go build  -o get_all_pods
 
 
-
+Tested in Rocky Linux 9.5
 # 1. Remove old version (optional but clean)
 sudo dnf remove golang -y
 
@@ -95,14 +95,18 @@ export PATH=/usr/local/go/bin:$PATH
 
 # 4. Verify
 go version
+cd session-api-server/go_code
+go mod init get_pods
+go mod tidy
+go run main.go
+go build  -o get_all_pods
 
-🔗 GoLang client-go to access Kubernetes (by TechWorld with Nana)
 
-Running from Remote Linux Machine
+🔗 GoLang client-go to access Kubernetes 
+
+Running binary from Remote Client Linux Machine
+Copy binary (get_all_pods) and .kube/config file to  Client Linux Machine
 scp -P 2222 root@localhost:/root/project_sessions/session-api-server/go_code/get_all_pods .
 scp -v -P 2222 root@localhost:/root/.kube/config .
 
-
-cp  /home/shakil/.kube/config  /home/shakil/.kube/config-back
-cp config  /home/shakil/.kube/config
 ./get_all_pods
