@@ -102,7 +102,7 @@ go run main.go
 go build  -o get_all_pods
 
 
-🔗 GoLang client-go to access Kubernetes 
+# GoLang client-go to access Kubernetes 
 
 Running binary from Remote Client Linux Machine
 Copy binary (get_all_pods) and .kube/config file to  Client Linux Machine
@@ -110,6 +110,23 @@ scp -P 2222 root@localhost:/root/project_sessions/session-api-server/go_code/get
 scp -v -P 2222 root@localhost:/root/.kube/config .
 
 ./get_all_pods
+
+Example Usage
+
+# Using default image (pause)
+./get_all_pods run test-pod
+
+# Using custom image (nginx)
+./get_all_pods run my-nginx-pod --image nginx:latest
+
+# Using short flag for image
+./get_all_pods run alpine-pod -i alpine
+
+# List pods in the 'default' namespace
+./get_all_pods list default
+
+# List pods in the 'test-ns' namespace
+./get_all_pods list test-ns
 
 # Using default image (pause)
 ./get_all_pods run test-pod

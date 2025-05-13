@@ -16,6 +16,7 @@ import (
 
 // Global variable for the Kubernetes clientset
 var clientset *kubernetes.Clientset
+var image string // Image flag for the run command
 
 // Root command
 var rootCmd = &cobra.Command{
@@ -43,14 +44,18 @@ var listCmd = &cobra.Command{
 
 // Run command to create a pod
 var runCmd = &cobra.Command{
-    Use:   "run [pod-name] [namespace]",
-    Short: "Create a pod in the given namespace",
-    Args:  cobra.ExactArgs(1), // Only expect one argument for pod name
+    Use:   "run [pod-name]",
+    Short: "Create a pod in the given namespace with a specified image",
+    Args:  cobra.ExactArgs(1),
     Run: func(cmd *cobra.Command, args []string) {
         podName := args[0]
-        // Ask for the namespace and use "default" if empty
         namespace := promptForNamespace()
-        err := CreatePod(namespace, podName, clientset)
+
+        if image == "" {
+            image = "k8s.gcr.io/pause:3.1" // default image
+        }
+
+        err := CreatePod(namespace, podName, image, clientset)
         if err != nil {
             fmt.Println("Error creating pod:", err)
             os.Exit(1)
@@ -77,6 +82,9 @@ func init() {
         os.Exit(1)
     }
 
+    // Add image flag to the run command
+    runCmd.Flags().StringVarP(&image, "image", "i", "", "Container image to use (default is 'k8s.gcr.io/pause:3.1')")
+
     // Add subcommands to the root command
     rootCmd.AddCommand(listCmd)
     rootCmd.AddCommand(runCmd)
@@ -92,7 +100,7 @@ func ListPods(namespace string, client kubernetes.Interface) (*v1.PodList, error
 }
 
 // CreatePod function to create a pod
-func CreatePod(namespace string, podName string, client kubernetes.Interface) error {
+func CreatePod(namespace string, podName string, image string, client kubernetes.Interface) error {
     pod := &v1.Pod{
         ObjectMeta: metav1.ObjectMeta{
             Name: podName,
@@ -100,8 +108,8 @@ func CreatePod(namespace string, podName string, client kubernetes.Interface) er
         Spec: v1.PodSpec{
             Containers: []v1.Container{
                 {
-                    Name:  "pause",
-                    Image: "k8s.gcr.io/pause:3.1",
+                    Name:  "main",
+                    Image: image,
                 },
             },
         },
@@ -110,7 +118,7 @@ func CreatePod(namespace string, podName string, client kubernetes.Interface) er
     if err != nil {
         return fmt.Errorf("failed to create pod: %v", err)
     }
-    fmt.Println("Pod created successfully")
+    fmt.Printf("Pod '%s' created successfully in namespace '%s' with image '%s'\n", podName, namespace, image)
     return nil
 }
 
@@ -123,7 +131,6 @@ func promptForInput(prompt string) string {
         fmt.Println("Error reading input:", err)
         os.Exit(1)
     }
-    // Trim the newline character and return the input
     return input[:len(input)-1]
 }
 
@@ -131,7 +138,7 @@ func promptForInput(prompt string) string {
 func promptForNamespace() string {
     namespace := promptForInput("Enter the namespace for the pod (default is 'default'): ")
     if namespace == "" {
-        namespace = "default" // default to "default" if the user presses enter without input
+        namespace = "default"
     }
     return namespace
 }
