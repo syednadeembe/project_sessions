@@ -127,12 +127,3 @@ Example Usage
 
 # List pods in the 'test-ns' namespace
 ./get_all_pods list test-ns
-
-# Using default image (pause)
-./get_all_pods run test-pod
-
-# Using custom image (nginx)
-./get_all_pods run my-nginx-pod --image nginx:latest
-
-# Using short flag for image
-./get_all_pods run alpine-pod -i alpine
