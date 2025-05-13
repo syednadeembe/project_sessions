@@ -110,3 +110,12 @@ scp -P 2222 root@localhost:/root/project_sessions/session-api-server/go_code/get
 scp -v -P 2222 root@localhost:/root/.kube/config .
 
 ./get_all_pods
+
+# Using default image (pause)
+./get_all_pods run test-pod
+
+# Using custom image (nginx)
+./get_all_pods run my-nginx-pod --image nginx:latest
+
+# Using short flag for image
+./get_all_pods run alpine-pod -i alpine
