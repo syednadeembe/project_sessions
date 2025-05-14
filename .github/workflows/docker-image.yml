@@ -7,13 +7,17 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
- #     run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-      run: docker-compose build
+      - uses: actions/checkout@v4.2.2
+
+      - name: Run docker compose
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./session-3/part-3/docker-compose.yml"
+
+      - name: Execute tests in the running services
+        run: |
+          docker compose build
