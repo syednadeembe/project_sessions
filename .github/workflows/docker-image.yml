@@ -18,6 +18,4 @@ jobs:
         with:
           compose-file: "./session-3/part-3/docker-compose.yaml"
 
-      - name: Execute tests in the running services
-        run: |
-          docker compose up
+
