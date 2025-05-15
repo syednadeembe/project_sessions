@@ -1,3 +1,6 @@
 flask
 flask-cors
 prometheus_client
+pytest
+
+
