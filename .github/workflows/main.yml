@@ -1,0 +1,26 @@
+name: Docker
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+env:
+  IMAGE_REGISTRY: "https://registry.hub.docker.com"
+  FOO_IMAGE_NAME: "syednadeembe/myflaskapp"
+  FOO_IMAGE_VERSION: "v7"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Log into registry ${{ env.IMAGE_REGISTRY }}
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: "syednadeembe"
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: publish
+        uses: 0x4r45h/docker-compose-ci@v0.1.0
