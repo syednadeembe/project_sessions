@@ -7,15 +7,33 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-scan:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
 
-      - name: Run docker compose
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run docker compose to build images
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-file: "./session-3/part-3/docker-compose.yaml"
 
+      - name: Install Trivy scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'syednadeembe/myflaskapp:prod'
+          format: 'table'
+          exit-code: '1'          # Fails workflow on critical issues
+          ignore-unfixed: true
 
+      - name: Scan Docker image with Trivy (dev)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'syednadeembe/myflaskapp:dev'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
