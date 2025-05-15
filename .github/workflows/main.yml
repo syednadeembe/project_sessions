@@ -18,7 +18,7 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout code  # ✅ YOU NEED THIS!
+      - name: Checkout code 
         uses: actions/checkout@v4
 
       - name: Log into registry ${{ env.IMAGE_REGISTRY }}
