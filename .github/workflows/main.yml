@@ -26,7 +26,7 @@ jobs:
         with:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: "syednadeembe"
-          password: ${{ secrets.DOCKER_TOKEN }}
+          password: ${{ secrets.GH_TOKEN }}
 
       - name: Publish using docker-compose
         uses: 0x4r45h/docker-compose-ci@v0.1.0
