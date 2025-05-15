@@ -1,9 +1,9 @@
 name: Docker-Push-WorkFlow
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["CI-WorkFlow"]         # Must exactly match the `name` from workflow that does the CI
+    types:
+      - completed
 
 env:
   IMAGE_REGISTRY: "https://registry.hub.docker.com"
@@ -12,6 +12,7 @@ env:
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}   # Only run if CI passed
     runs-on: ubuntu-latest
     permissions:
       contents: read
