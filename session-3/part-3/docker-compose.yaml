@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "9002:9000"
-    image: syednadeembe/myflaskapp:devImage
+    image: syednadeembe/myflaskapp:dev
     networks:
       - mynetwork
   multistaged:
@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile.prod
     ports:
       - "9001:9000"
-    image: syednadeembe/myflaskapp:prodImage
+    image: syednadeembe/myflaskapp:prod
     networks:
       - mynetwork
   multistaged-replica:
@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile.prod
     ports:
       - "9000:9000"
-    image: syednadeembe/myflaskapp:prodImage
+    image: syednadeembe/myflaskapp:prod
     networks:
       - mynetwork
   nginx:
