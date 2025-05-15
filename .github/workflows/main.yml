@@ -1,4 +1,4 @@
-name: Docker
+name: Docker-Push-WorkFlow
 on:
   push:
     branches: [ "main" ]
