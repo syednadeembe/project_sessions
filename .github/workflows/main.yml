@@ -21,7 +21,7 @@ jobs:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: "syednadeembe"
           password: ${{ secrets.DOCKER_TOKEN }}
-          docker_compose_files: "./session-3/part-3/docker-compose.yaml"
+
           
 
       - name: publish
