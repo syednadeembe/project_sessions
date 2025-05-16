@@ -1,0 +1,29 @@
+# Dockerfile.prod
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Create a non-root user and group
+RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+
+# Copy application files
+COPY app.py requirements.txt ./
+
+# Replace string for production marker
+RUN sed -i 's/Base Version/Production Version/g' app.py
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Give permissions to appuser
+RUN chown -R appuser:appgroup /app
+
+# Switch to non-root user
+USER appuser
+
+# Expose Flask port
+EXPOSE 9000
+
+# Run the app
+CMD ["python", "app.py"]

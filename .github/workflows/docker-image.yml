@@ -1,0 +1,56 @@
+name: CI-WorkFlow
+
+on:
+  push:
+    branches: [ "main" ]           # Trigger on push to the main branch
+  pull_request:
+    branches: [ "main" ]           # Trigger on pull request to main
+  workflow_dispatch:               # Allow manual execution from GitHub UI
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest         # Use the latest Ubuntu runner
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      # Step 2: Set up Docker Buildx for advanced build support
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Step 3: Build Docker images defined in your Compose file
+      - name: Run docker compose to build images
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./session-3/part-3/docker-compose.yaml"  # Path to your compose file
+
+      # Step 4: Install project dependencies and testing tools
+      - name: Install Python dependencies
+        run: |
+          pip install -r session-3/part-3/requirements.txt         # Install app requirements
+          pip install pytest                                       # Install pytest for test execution
+
+      # Step 5: Run unit tests using pytest
+      - name: Run unit tests
+        run: |
+          pytest session-3/part-3/test_app.py                      # Run tests for app.py
+
+      # Step 6: Run Trivy scan for vulnerabilities on the images
+      - name: Scan Docker image with Trivy (dev)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'syednadeembe/myflaskapp:dev'                 # Image to scan
+          format: 'table'
+          exit-code: '0'                                           #Allow pass even if issues are found
+          ignore-unfixed: true
+      - name: Scan Docker image with Trivy (prod)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'syednadeembe/myflaskapp:prod'                # Image to scan
+          format: 'table'                                          # Output format
+          exit-code: '0'                                           # Allow pass even if issues are found
+          ignore-unfixed: true                                     # Only flag fixed CVEs
+
+

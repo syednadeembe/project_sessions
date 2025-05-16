@@ -1,0 +1,38 @@
+version: '3.8'
+networks:
+  mynetwork:
+    driver: bridge
+services:
+  app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "9002:9000"
+    image: syednadeembe/myflaskapp:dev
+    networks:
+      - mynetwork
+  multistaged:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "9001:9000"
+    image: syednadeembe/myflaskapp:prod
+    networks:
+      - mynetwork
+  multistaged-replica:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "9000:9000"
+    image: syednadeembe/myflaskapp:prod
+    networks:
+      - mynetwork
+  nginx:
+    build: ./nginx
+    ports:
+    - "8080:80"
+    networks:
+      - mynetwork

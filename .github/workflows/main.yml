@@ -1,0 +1,35 @@
+name: Docker-Push-WorkFlow
+on:
+  workflow_run:
+    workflows: ["CI-WorkFlow"]         # Must exactly match the `name` from workflow that does the CI
+    types:
+      - completed
+
+env:
+  IMAGE_REGISTRY: "https://registry.hub.docker.com"
+  FOO_IMAGE_NAME: "syednadeembe/myflaskapp"
+  FOO_IMAGE_VERSION: "v7"
+
+jobs:
+  build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}   # Only run if CI passed
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code 
+        uses: actions/checkout@v4
+
+      - name: Log into registry ${{ env.IMAGE_REGISTRY }}
+        uses: docker/login-action@v3
+        with:
+          registry: "docker.io"
+          username: "syednadeembe"
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Publish using docker-compose
+        uses: 0x4r45h/docker-compose-ci@v0.1.0
+        with:
+          docker_compose_files: '-f ./session-3/part-3/docker-compose.yaml'

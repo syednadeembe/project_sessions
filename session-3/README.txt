@@ -35,7 +35,9 @@ docker-compose up
 #### part-2 white board 
 # understand multistage build
 # understand how one has to create a self managed load balancer 
-
 ##clean up 
 docker rm -vf $(docker ps -aq)
 docker rmi -f $(docker images -aq)
+
+#### part-3 white board for github actions 
+# enable workflows and explain CI
