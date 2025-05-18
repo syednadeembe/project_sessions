@@ -24,4 +24,4 @@ jobs:
       - name: Run docker compose to build images
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
-          compose-file: "./session-3/part-3/docker-compose.yaml"  # Path to your compose file
+          compose-file: "./session-3/part-3/docker-compose.yaml"  
