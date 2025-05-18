@@ -43,7 +43,7 @@ jobs:
         with:
           image-ref: 'syednadeembe/myflaskapp:dev'                 # Image to scan
           format: 'table'
-          exit-code: '0'                                           #Allow pass even if issues are found
+          exit-code: '1'                                           #Allow pass even if issues are found
           ignore-unfixed: true
       - name: Scan Docker image with Trivy (prod)
         uses: aquasecurity/trivy-action@master
