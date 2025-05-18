@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-and-scan:
-    runs-on: ubuntu-latest         # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest         # Ubuntu runner
 
     steps:
       # Step 1: Checkout the code from the repository
