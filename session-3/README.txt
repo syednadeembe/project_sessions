@@ -40,4 +40,4 @@ docker rm -vf $(docker ps -aq)
 docker rmi -f $(docker images -aq)
 
 #### part-3 white board for github actions 
-# enable workflows and explain CI
+# enable workflows and explain CI and stages that need to be part of CI
