@@ -55,7 +55,7 @@ jobs:
       - name: Scan Docker image with Trivy (prod-replica)
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'linuxshakil/myflaskapp-replica:v1'                # Image to scan
+          image-ref: 'linuxshakil/myflaskapp:replica'                # Image to scan
           format: 'table'                                          # Output format
           exit-code: '0'                                           # Allow pass even if issues are found
           ignore-unfixed: true                                     # Only flag fixed CVEs                                  # Only flag fixed CVEs
