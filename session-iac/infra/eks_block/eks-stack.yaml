@@ -44,7 +44,7 @@ Parameters:
     Default: project_sessions
   VpcId:
     Type: String
-    Default: vpc-08a89bfa84f0400ca # <-- change this as per your VPCID
+    Default: vpc-734ca218 # <-- change this as per your VPCID
 Resources:
 
   ###########################################
