@@ -292,9 +292,9 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       SubnetId: !Ref PublicSubnet01
-      ImageId: ami-0230bd60aa48260c6 # ImageID valid only in us-east-1 region
+      ImageId: ami-0af9569868786b23a # ImageID valid only in us-east-1 region
       InstanceType: t2.micro
-      KeyName: mosy_onestup_virginia # <-- Change to use your key-pair name
+      KeyName: project_sessions # <-- Change to use your key-pair name
       SecurityGroupIds:
         - !Ref BastionInstanceSecurityGroup
 
@@ -316,7 +316,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: 49.36.200.4/32
+          CidrIp: 49.36.203.59/32 # <-- Change to use your IP
 
       
 Outputs:
