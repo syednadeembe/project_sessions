@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Amazon ECR Repository'
+
+Parameters:
+  ECRRepositoryName:
+    Type: String
+    Description: 'Name of the Amazon ECR repository.'
+
+  EKSIAMRoleArn:
+    Type: String
+    Description: 'ARN of the existing IAM role for EKS to access the ECR repository.'
+
+Resources:
+  ECRRepository:
+    Type: 'AWS::ECR::Repository'
+    Properties:
+      RepositoryName: !Ref ECRRepositoryName
+
+Outputs:
+  ECRRepositoryUri:
+    Description: 'URI of the created ECR repository.'
+    Value: !GetAtt ECRRepository.RepositoryUri
+    Export:
+      Name: !Sub "${AWS::StackName}-ECR-RepositoryUri"
