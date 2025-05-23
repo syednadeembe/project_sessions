@@ -32,19 +32,19 @@ Parameters:
     Default: 3
   InstanceType:
     Type: String
-    Default: t3.medium
+    Default: t3.small
   KubernetesVersion:
     Type: String
     Default: 1.24
   SSHAllowedIP:
     Type: String
-    Default: 54.204.182.222/32
+    Default: 54.204.182.222/32 # <-- change this to the IP of bastion 
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName
-    Default: mosy_onestup_virginia
+    Default: project_sessions
   VpcId:
     Type: String
-    Default: vpc-08a89bfa84f0400ca # change this as per your VPCID
+    Default: vpc-08a89bfa84f0400ca # <-- change this as per your VPCID
 Resources:
 
   ###########################################
