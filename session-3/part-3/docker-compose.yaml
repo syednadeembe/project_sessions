@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile.prod-replica
     ports:
       - "9000:9000"
-    image: linuxshakil/myflaskapp-replica:v1
+    image: linuxshakil/myflaskapp:replica
     networks:
       - mynetwork
   nginx:
