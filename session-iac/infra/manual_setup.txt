@@ -10,7 +10,7 @@ Note : Follow the Video Recording to see the configuration
       "Sid": "AllowEKSDescribeCluster",
       "Effect": "Allow",
       "Action": "eks:DescribeCluster",
-      "Resource": "arn:aws:eks:<Your EKS Cluster>
+      "Resource": "arn:aws:eks:<Your EKS Cluster>"
     }
   ]
 }
