@@ -292,7 +292,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       SubnetId: !Ref PublicSubnet01
-      ImageId: ami-0af9569868786b23a # ImageID valid only in us-east-1 region
+      ImageId: ami-0af9569868786b23a # ImageID valid only in ap-south-1 region
       InstanceType: t2.micro
       KeyName: project_sessions # <-- Change to use your key-pair name
       SecurityGroupIds:
