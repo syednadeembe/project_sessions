@@ -1,0 +1,142 @@
+###############################################################################
+# Name: eks-stack.yaml
+###############################################################################
+# Description:
+# CloudFormation template to provides stack for AWS EKS Resources.
+# Resources To Be Created : EksRole, EksNodeRole, EksCluster, EksNodegroup 
+###############################################################################
+# Copyright (c) 2023-2024 Onestup.com
+###############################################################################
+###############################################################################
+# Author: Syed Nadeem 
+###############################################################################
+###############################################################################
+# Variable  Declaration
+###############################################################################
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Amazon EKS Cluster'
+
+Parameters:
+  ClusterName:
+    Type: String
+    Default: eks-dev-cluster
+  MinNumberOfWorkerNodes:
+    Type: Number
+    Default: 1
+  DesiredNumberOfWorkerNodes:
+    Type: Number
+    Default: 2
+  MaxNumberOfWorkerNodes:
+    Type: Number
+    Default: 3
+  InstanceType:
+    Type: String
+    Default: t3.small
+  KubernetesVersion:
+    Type: String
+    Default: 1.24
+  SSHAllowedIP:
+    Type: String
+    Default: 54.204.182.222/32 # <-- change this to the IP of bastion 
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: project_sessions
+  VpcId:
+    Type: String
+    Default: vpc-734ca218 # <-- change this as per your VPCID
+Resources:
+
+  ###########################################
+  ## Roles
+  ###########################################
+  EksRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: my.eks.cluster.role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - eks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  EksNodeRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: my.eks.node.role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+        - "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+        - "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+
+  ###########################################
+  ## Eks Cluster
+  ###########################################
+
+  EksCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: !Ref ClusterName
+      Version: !Ref KubernetesVersion
+      RoleArn: !GetAtt EksRole.Arn
+      # Tags:
+      #   - Key: 'Name'
+      #     Value: 'eks-dev'
+      #   - Key: 'Environment'
+      #     Value: 'Development'
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+          - !ImportValue ControlPlaneSecurityGroupId
+        SubnetIds: !Split [ ',', !ImportValue PrivateSubnetIds ]
+
+  EksNodegroup:
+    Type: AWS::EKS::Nodegroup
+    DependsOn: EksCluster
+    Properties:
+      ClusterName: !Ref ClusterName
+      NodeRole: !GetAtt EksNodeRole.Arn
+      InstanceTypes:
+        - !Ref InstanceType
+      RemoteAccess:
+        Ec2SshKey: !Ref KeyName
+      # Tags:
+      #   - Key: 'Name'
+      #     Value: 'eks-dev'
+      #   - Key: 'Environment'
+      #     Value: 'Development'
+      ScalingConfig:
+        MinSize:
+          Ref: MinNumberOfWorkerNodes
+        DesiredSize:
+          Ref: DesiredNumberOfWorkerNodes
+        MaxSize:
+          Ref: MaxNumberOfWorkerNodes
+      Subnets: !Split [ ',', !ImportValue PrivateSubnetIds ]
+
+  EKSNodeGroupSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'Security group for EKS worker nodes'
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref SSHAllowedIP

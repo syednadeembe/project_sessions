@@ -1,4 +1,4 @@
-###prerequirement : you have the Images created from the previous sessions 
+###prerequirement : you have the Images created from the previous sessions project_sessions/session-3/part-2
 ###for generating sample yaml file
 kubectl run myapp --image=nginx --dry-run=client -oyaml 
 ###replica set & when to use it

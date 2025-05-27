@@ -1,0 +1,45 @@
+Note : Follow the Video Recording to see the configuration
+### Task : Setting a EKS cluster manually with AWS UI
+### Task : Create the Bastion Node in Public Subnet 
+### Task : Create a Bastion Role and give it EKS Describe Policy 
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowEKSDescribeCluster",
+      "Effect": "Allow",
+      "Action": "eks:DescribeCluster",
+      "Resource": "arn:aws:eks:<Your EKS Cluster>"
+    }
+  ]
+}
+
+Also add AmazonEKSClusterPolicy to this role
+
+### Attach the Role to the EC2
+### Update the Ec2 role to k8s rbac, this should be done from cloudshell 
+
+aws eks update-kubeconfig --region ap-south-1 --name <Your EKS Cluster Name>
+aws eks update-kubeconfig --region ap-south-1 --name eks-dev-cluster
+kubectl edit configmap aws-auth -n kube-system
+
+mapRoles: |
+  - rolearn: arn:aws:iam::468731312863:role/mosy-labRole
+    username: ec2-admin
+    groups:
+      - system:masters
+
+
+### In the EKS SG add inbound traffic for VPC CIDR 
+### Now ssh into bastion, install and configure kubectl 
+
+KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
+
+
+
+
+
