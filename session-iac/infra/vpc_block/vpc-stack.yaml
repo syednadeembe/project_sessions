@@ -294,7 +294,7 @@ Resources:
       SubnetId: !Ref PublicSubnet01
       ImageId: ami-0af9569868786b23a # ImageID valid only in ap-south-1 region
       InstanceType: t2.micro
-      KeyName: project_sessions # <-- Change to use your key-pair name
+      KeyName: mumbai # <-- Change to use your key-pair name
       SecurityGroupIds:
         - !Ref BastionInstanceSecurityGroup
 
