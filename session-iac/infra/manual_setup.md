@@ -44,6 +44,7 @@ Create an IAM role that allows the EKS control plane to manage AWS resources on 
 
 ![image](https://github.com/user-attachments/assets/58585460-74b6-411b-993f-24ea7fb8167a)
 
+Change role name as you created
 ![image](https://github.com/user-attachments/assets/d3db951d-85c1-44c0-8570-23eeb90c9dd8)
 
 ### Step 3: Create EKS Cluster
