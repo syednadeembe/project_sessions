@@ -27,7 +27,8 @@ Create a VPC where you want to deploy your EKS cluster.
 - Private subnets for EKS worker nodes
 - Internet Gateway and NAT Gateway for connectivity
 
-![VPC Creation](screenshots/vpc-creation.png)
+![image](https://github.com/user-attachments/assets/a67677a6-f94f-4f7c-bb35-b1a8e50f5c95)
+
 
 ### Step 2: Create EKS Service Role
 
