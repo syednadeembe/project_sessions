@@ -27,7 +27,8 @@ Create a VPC where you want to deploy your EKS cluster.
 - Private subnets for EKS worker nodes
 - Internet Gateway and NAT Gateway for connectivity
 
-![image](https://github.com/user-attachments/assets/a67677a6-f94f-4f7c-bb35-b1a8e50f5c95)
+![image](https://github.com/user-attachments/assets/3e992773-2cc2-4e12-9d1c-4ac9e6d13b31)
+
 
 
 ### Step 2: Create EKS Service Role
@@ -40,9 +41,11 @@ Create an IAM role that allows the EKS control plane to manage AWS resources on 
    - `AmazonEKSClusterPolicy`
 4. Name the role (e.g., `eks-cluster-role`)
 5. Create the role
-![image](https://github.com/user-attachments/assets/958e3fba-286b-42c3-a415-43870153646c)
+![image](https://github.com/user-attachments/assets/6ce5aa96-3053-43c3-a319-199f613d8873)
 
-![image](https://github.com/user-attachments/assets/58585460-74b6-411b-993f-24ea7fb8167a)
+
+![image](https://github.com/user-attachments/assets/df0737c4-7ba5-408f-9469-6e9e674dcb0c)
+
 
 Change role name as you created
 ![image](https://github.com/user-attachments/assets/d3db951d-85c1-44c0-8570-23eeb90c9dd8)
@@ -74,11 +77,15 @@ Change role name as you created
    ```
    arn:aws:eks:ap-south-1:267714372222:cluster/my-eks
    ```
-![image](https://github.com/user-attachments/assets/00069cd9-f196-4f2f-a80c-b3ed71e49c61)
+![image](https://github.com/user-attachments/assets/ece54ab2-81d7-4b3d-a7e1-fb0d7a603eb2)
 
-![image](https://github.com/user-attachments/assets/10760474-8444-447c-86fd-16e6c06bf634)
 
-![image](https://github.com/user-attachments/assets/af41b4cb-afc1-4570-a9b1-b5de7acd478e)
+![image](https://github.com/user-attachments/assets/29562dd5-3cd7-4b6b-bdf3-c0d3f9977ef1)
+
+
+![image](https://github.com/user-attachments/assets/0650b995-7749-4378-a75f-424049496d07)
+
+![image](https://github.com/user-attachments/assets/30174503-1a67-4a01-ac19-b421e10e722f)
 
 
 ### Step 4: Create IAM Role for Bastion Host
@@ -94,11 +101,14 @@ Create an IAM role for the EC2 bastion host to access EKS cluster.
 4. Name the role: `bastion-eks-access-role`
 5. Create the role
 
-![image](https://github.com/user-attachments/assets/7a6ca4a2-8e54-41a2-93a8-99b2ee858e37)
+![image](https://github.com/user-attachments/assets/2c9e7a48-0862-4278-97a8-a61f8d19f3bb)
 
-![image](https://github.com/user-attachments/assets/bd957692-669b-41fe-bbda-1b6b91998bbc)
 
-![image](https://github.com/user-attachments/assets/36a0c02b-cd52-4697-86ff-375ca2219ee9)
+![image](https://github.com/user-attachments/assets/b8452c2a-0cbe-4ec6-aa2d-f63a00bdda4f)
+
+
+![image](https://github.com/user-attachments/assets/56ecb74c-0e6a-46b1-acf5-9566ed8abe83)
+
 
 
 ### Step 5: Launch Bastion Host
@@ -115,9 +125,11 @@ Create an IAM role for the EC2 bastion host to access EKS cluster.
 
 3. Launch the instance
 
-![image](https://github.com/user-attachments/assets/dc05270c-43e3-4168-a2c2-c328b84d324b)
+![image](https://github.com/user-attachments/assets/4e12e1e2-297e-4f46-80fa-7657b46ccd28)
 
-![image](https://github.com/user-attachments/assets/2e5b7f0e-b5a6-48a6-9bd2-6a228ed04dbe)
+
+![image](https://github.com/user-attachments/assets/144d4c5f-d30b-4bd2-9f80-1ee1b3a6f9b2)
+
 
 
 ### Step 6: Install kubectl on Bastion Host
@@ -137,7 +149,8 @@ sudo mv kubectl /usr/local/bin/
 # Verify installation
 kubectl version --client
 ```
-![image](https://github.com/user-attachments/assets/a34c1621-34ee-4504-aafb-09b596a26481)
+![image](https://github.com/user-attachments/assets/11c9063b-426a-49af-95cd-a6274c193a39)
+
 
 *Initial connection will fail - this is expected and will be resolved in the following steps.*
 
@@ -151,11 +164,14 @@ Allow the bastion host to communicate with the EKS cluster by updating the EKS s
    - Type: All traffic (or specific ports as needed)
    - Source: VPC CIDR block (e.g., 10.0.0.0/16)
 
-![image](https://github.com/user-attachments/assets/f6650066-0e93-4741-934f-3a0d6adc9e68)
+![image](https://github.com/user-attachments/assets/91f8b7e2-7907-4aac-8b00-db1d7874461d)
 
-![image](https://github.com/user-attachments/assets/54abe22c-0d9b-488c-994a-78d041d235c2)
 
-![image](https://github.com/user-attachments/assets/19ef5e39-8453-4967-a0c7-37c835cab64d)
+![image](https://github.com/user-attachments/assets/5a2b8e8f-e32b-4ad6-8ff3-9327c536bad8)
+
+
+![image](https://github.com/user-attachments/assets/f1da370d-0ee0-4fb7-bbb7-cc85329bcc92)
+
 
 
 ### Step 8: Update AWS Auth ConfigMap
@@ -187,6 +203,7 @@ aws eks update-kubeconfig --region ap-south-1 --name my-eks
 # Apply the aws-auth ConfigMap
 kubectl apply -f auth-aws.yaml
 ```
+![image](https://github.com/user-attachments/assets/c4ba0740-cf4b-4d9a-ba87-999e9912d9dc)
 
 ![image](https://github.com/user-attachments/assets/ac1ef1dc-aee0-4733-98ab-fc668c31c64d)
 
@@ -204,7 +221,8 @@ kubectl get nodes
 kubectl get pods --all-namespaces
 ```
 
-![image](https://github.com/user-attachments/assets/dc9a1be9-87b8-4e04-b04c-852576aac3dc)
+![image](https://github.com/user-attachments/assets/200059eb-af39-41f3-91f2-0b60aae7b18c)
+
 
 
 ## Verification
