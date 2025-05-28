@@ -78,3 +78,52 @@ go mod init get_pods
 go mod tidy
 go run main.go
 go build  -o get_all_pods
+
+
+Tested in Rocky Linux 9.5
+# 1. Remove old version (optional but clean)
+sudo dnf remove golang -y
+
+# 2. Download and install latest Go manually (1.24.1 as of now)
+cd /usr/local
+sudo curl -OL https://go.dev/dl/go1.24.1.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.24.1.linux-amd64.tar.gz
+sudo rm -f go1.24.1.linux-amd64.tar.gz
+
+# 3. Set PATH (permanently by editing /etc/profile.d/go.sh or ~/.bashrc)
+export PATH=/usr/local/go/bin:$PATH
+
+# 4. Verify
+go version
+cd session-api-server/go_code
+go mod init get_pods
+go mod tidy
+go run main.go
+go build  -o get_all_pods
+
+
+# GoLang client-go to access Kubernetes 
+
+Running binary from Remote Client Linux Machine
+Copy binary (get_all_pods) and .kube/config file to  Client Linux Machine
+scp -P 2222 root@localhost:/root/project_sessions/session-api-server/go_code/get_all_pods .
+scp -v -P 2222 root@localhost:/root/.kube/config .
+
+./get_all_pods
+
+Example Usage
+
+# Using default image (pause)
+./get_all_pods run test-pod
+
+# Using custom image (nginx)
+./get_all_pods run my-nginx-pod --image nginx:latest
+
+# Using short flag for image
+./get_all_pods run alpine-pod -i alpine
+
+# List pods in the 'default' namespace
+./get_all_pods list default
+
+# List pods in the 'test-ns' namespace
+./get_all_pods list test-ns
