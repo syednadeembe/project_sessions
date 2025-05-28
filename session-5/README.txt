@@ -27,7 +27,7 @@ kubectl describe ingress myapp-ingress
 
 
 ###navigate to ingress-nginx and check the controller logs 
-kubectl logs -f deployment/ingress-nginx-controller
+kubectl logs -f deployment/ingress-nginx-controller -n ingress-nginx
 
 ###open another terminal 
 
