@@ -1,6 +1,6 @@
 # Setting up EKS Access from EC2 Bastion Host
 
-This guide walks through setting up Amazon EKS cluster access from an EC2 bastion host, including VPC configuration, IAM roles, and kubectl setup.
+This guide walks through setting up Amazon EKS cluster And accessing from an EC2 bastion host, including VPC configuration, IAM roles, and kubectl setup.
 
 ## Prerequisites
 
