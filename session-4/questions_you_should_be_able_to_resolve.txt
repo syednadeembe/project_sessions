@@ -4,3 +4,4 @@
 4. What is deployment and how is it different from replica set ?
 5. What are controller managers ?
 6. How does k8s manage loadbalancing ?
+7. How to upgrade version of kubernetes cluster ?
