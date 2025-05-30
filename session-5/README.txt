@@ -22,7 +22,16 @@ kubectl run test --image=busybox --rm -it --restart=Never -- /bin/sh
 # Inside the test pod
 wget -qO- http://web-service
 
+### For Headless Service
+kubectl apply -f headless.yaml
+kubectl run testpod --image=busybox:1.28 -it --rm -- /bin/sh
+ping db-0.headless-db
+ping db-1.headless-db
 
+### For External Service
+kubectl run curlpod --image=radial/busyboxplus:curl -it --rm
+# Inside the pod
+nslookup external-google.default.svc.cluster.local
 
 ###download the ingress ngix-controller 
 curl -LO https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/baremetal/deploy.yaml
