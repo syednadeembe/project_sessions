@@ -8,6 +8,22 @@ kubectl get svc
 kubectl get deployment
 kubectl get endpoints
 
+### Under Service Discovery 
+### What enables a pod to find and communicate with each other without hardcoding IP 
+- CoreDNS : maps service names to IPs
+- Headless Services : no cluster IP, returns pod IPs instead
+- External Name : maps service to an external DNS name
+
+### DNS-Based Service Discovery (ClusterIP)
+kubectl run web --image=nginx --restart=Never --port=80
+kubectl expose pod web --port=80 --target-port=80 --name=web-service
+
+kubectl run test --image=busybox --rm -it --restart=Never -- /bin/sh
+# Inside the test pod
+wget -qO- http://web-service
+
+
+
 ###download the ingress ngix-controller 
 curl -LO https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/baremetal/deploy.yaml
 kubectl apply -f deploy.yaml
