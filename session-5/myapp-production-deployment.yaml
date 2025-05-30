@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: myapp:productionImage
+          image: syednadeembe/myflaskapp:prod
           resources:
             requests:
                memory: "100Mi"
