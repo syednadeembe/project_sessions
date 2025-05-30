@@ -29,6 +29,7 @@ ping db-0.headless-db
 ping db-1.headless-db
 
 ### For External Service
+kubectl apply -f external_service.yaml
 kubectl run curlpod --image=radial/busyboxplus:curl -it --rm
 # Inside the pod
 nslookup external-google.default.svc.cluster.local
