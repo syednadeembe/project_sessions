@@ -14,9 +14,6 @@ kubectl get endpoints
 - Headless Services : no cluster IP, returns pod IPs instead
 - External Name : maps service to an external DNS name
 
-### Role of kube-proxy
-sudo iptables-save | grep <ClusterIP of any Service that you want to inspect>
-
 ### DNS-Based Service Discovery (ClusterIP)
 kubectl run web --image=nginx --restart=Never --port=80
 kubectl expose pod web --port=80 --target-port=80 --name=web-service
@@ -24,6 +21,29 @@ kubectl expose pod web --port=80 --target-port=80 --name=web-service
 kubectl run test --image=busybox --rm -it --restart=Never -- /bin/sh
 # Inside the test pod
 wget -qO- http://web-service
+
+### Role of kube-proxy
+kubectl get svc myapp-production-clusterip
+sudo iptables-save | grep <ClusterIP of any Service>
+sudo iptables -t nat -L KUBE-SERVICES -n | grep <cluster-ip>
+sudo iptables -t nat -L KUBE-SERVICES -n --line-numbers
+
+## For Example #######################################
+
+sudo iptables-save | grep 10.104.12.212
+- You’ll see something like: -A KUBE-SERVICES -d 10.104.12.212/32 -p tcp --dport 80 -j KUBE-SVC-ABCD1234
+- Note down the service chain ID: KUBE-SVC-ABCD1234
+sudo iptables-save | grep KUBE-SVC-ABCD1234
+- You will get endpoint chains (each represents a Pod)
+
+Service ClusterIP (10.104.12.212:9000)
+    ⇓
+iptables KUBE-SERVICES
+    ⇓
+KUBE-SVC-YGPY7WI7YZ3DB7GT
+    ⇓
+KUBE-SEP-XYZ → Pod IP:Port (e.g., 10.244.1.25:9000)
+####################################################
 
 ### For Headless Service
 kubectl apply -f headless.yaml
