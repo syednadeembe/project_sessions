@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db
+spec:
+  serviceName: "headless-db"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: db
+        image: postgres:14
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_PASSWORD
+          value: mysecretpassword  # ❗ required
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: headless-db
+spec:
+  clusterIP: None
+  selector:
+    app: db
+  ports:
+  - port: 5432
