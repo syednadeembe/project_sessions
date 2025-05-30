@@ -14,6 +14,9 @@ kubectl get endpoints
 - Headless Services : no cluster IP, returns pod IPs instead
 - External Name : maps service to an external DNS name
 
+### Role of kube-proxy
+sudo iptables-save | grep <ClusterIP of any Service that you want to inspect>
+
 ### DNS-Based Service Discovery (ClusterIP)
 kubectl run web --image=nginx --restart=Never --port=80
 kubectl expose pod web --port=80 --target-port=80 --name=web-service
