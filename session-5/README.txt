@@ -9,6 +9,9 @@ kubectl get deployment
 kubectl get endpoints
 
 ### Under Service Discovery 
+<dont only on labsetup 
+- edit the configmap of coredns to add logs and debug sections and then rollout
+kubectl -n kube-system rollout restart deployment coredns >
 ### What enables a pod to find and communicate with each other without hardcoding IP 
 - CoreDNS : maps service names to IPs
 - Headless Services : no cluster IP, returns pod IPs instead
