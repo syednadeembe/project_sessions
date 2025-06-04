@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: myapp-production
-        image: myapp:productionImage
+        image: syednadeembe/myflaskapp:prod
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9000
