@@ -27,6 +27,9 @@ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/late
     # wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
     # add below arg at Deployment->spec->template->spec->args
     # --kubelet-insecure-tls
+
+kubectl -n kube-system patch deployment metrics-server \
+  --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--kubelet-insecure-tls"}]'
     
 ### configure HPA 
 kubectl autoscale deployment myapp-production-deployment --cpu-percent=50 --min=1 --max=5
