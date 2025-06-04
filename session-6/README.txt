@@ -37,6 +37,12 @@ kubectl autoscale deployment myapp-production-deployment --cpu-percent=50 --min=
 ### generate load 
 kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "count=0; while sleep 0.01; count=$((count+1)); do wget -q -O- http://myapp-production-service.default.svc.cluster.local:80; echo "\n"; done"
 
+### generate extra load 
+kubectl run -i --tty load-generator --rm \
+  --image=busybox:1.28 --restart=Never \
+  -- /bin/sh -c 'count=0; while true; do for i in $(seq 1 20); do wget -q -O- http://myapp-production-service.default.svc.cluster.local:80 >/dev/null & done; wait; count=$((count+1)); echo "Batch $count sent"; done'
+
+
 ######################################################################################
 # Monitoring
 ######################################################################################
