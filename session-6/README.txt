@@ -2,16 +2,16 @@
 # Setup 
 ######################################################################################
 ### Before running deployment make sure the images are persent in the system, use updated-image-with-metrics for building.
-###deploy the production deployments
+### deploy the production deployments
 kubectl apply -f example-myapp-production/deployment.yaml
 
-###deploy the production deployments svc
+### deploy the production deployments svc
 kubectl apply -f example-myapp-production/svc.yaml
 
-###create nginx for testing
+### create nginx for testing
 kubectl run nginx --image=nginx
 
-###curl the myapp-production service from nginx prod
+### curl the myapp-production service from nginx prod
 kubectl exec -it nginx bash
 curl myapp-production-service.default.svc.cluster.local:80
 
@@ -41,6 +41,28 @@ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never --
 kubectl run -i --tty load-generator --rm \
   --image=busybox:1.28 --restart=Never \
   -- /bin/sh -c 'count=0; while true; do for i in $(seq 1 20); do wget -q -O- http://myapp-production-service.default.svc.cluster.local:80 >/dev/null & done; wait; count=$((count+1)); echo "Batch $count sent"; done'
+
+
+######################################################################################
+# VPA
+######################################################################################
+### Setting up VPA needs manual installtion as VPA is not supported out of the box like HPA 
+### Following github project is where the VPA operator is managed : https://github.com/kubernetes/autoscaler
+cd project_sessions/session-6/vpa
+kubectl api-resources | grep hpa ---> hpa api is present by default
+kubectl api-resources | grep vpa ---> vpa api is not present by default
+git clone https://github.com/kubernetes/autoscaler.git
+cd autoscaler/vertical-pod-autoscaler/
+./hack/vpa-up.sh
+kubectl api-resources | grep vpa ---> notice the k8s newly added api-resources 
+kubectl explain  verticalpodautoscalers --recursive | less
+kubectl explain  verticalpodautoscalercheckpoints --recursive | less
+### verify metrics server is running 
+cd ../..
+kubectl top pods
+kubectl apply -f vpa.yaml
+kubectl apply -f load-generator.yaml
+kubectl get vpa -w
 
 
 ######################################################################################
