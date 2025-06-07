@@ -9,3 +9,13 @@ spec:
     name:       cpu-demo
   updatePolicy:
     updateMode: "Auto"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      minAllowed:
+        cpu: "100m"
+        memory: "100Mi"
+      maxAllowed:
+        cpu: "2"
+        memory: "1Gi"
+
