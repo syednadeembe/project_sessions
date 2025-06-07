@@ -1,21 +1,20 @@
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
-  name: cpu-demo-vpa
+  name: stress-load-vpa
 spec:
   targetRef:
     apiVersion: "apps/v1"
-    kind:       Deployment
-    name:       cpu-demo
+    kind: Deployment
+    name: stress-load
   updatePolicy:
     updateMode: "Auto"
   resourcePolicy:
     containerPolicies:
     - containerName: '*'
       minAllowed:
-        cpu: "100m"
-        memory: "100Mi"
+        cpu: "10m"
+        memory: "50Mi"
       maxAllowed:
-        cpu: "2"
-        memory: "1Gi"
-
+        cpu: "500m"
+        memory: "512Mi"
