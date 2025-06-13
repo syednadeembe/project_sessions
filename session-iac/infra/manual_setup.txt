@@ -30,6 +30,22 @@ mapRoles: |
     groups:
       - system:masters
 
+Note: If the ConfigMap is not created by default, please create it manually.
+
+#cat auth-aws.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::267714372222:role/bastion-eks-access-role
+      groups:
+        - system:masters
+
+#kubectl apply -f auth-aws.yaml
+
 
 ### In the EKS SG add inbound traffic for VPC CIDR 
 ### Now ssh into bastion, install and configure kubectl 
