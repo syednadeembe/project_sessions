@@ -114,4 +114,79 @@ kubectl edit prom prometheus-kube-prometheus-prometheus -n monitoring
 Re-Run the Load testing from HPA section 
 ### revert the prom object back for Graphana to work once your are done.
 
+### Loki add on 
+
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+
+helm install loki-stack grafana/loki-stack \
+  --namespace monitoring \
+  --create-namespace \
+  --set promtail.enabled=true
+
+Loki service available as: http://loki-stack.monitoring.svc.cluster.local:3100
+
+### test graphana and loki connectivity 
+kubectl exec -it <grafana-pod> -n monitoring -- sh
+/usr/share/grafana $ curl http://loki-stack.monitoring.svc.cluster.local:3100/ready
+ready
+
+### port forward with 
+kubectl port-forward svc/grafana-lb 3000:3000 -n monitoring
+
+### register as loki in graphana 
+kubectl exec -it <grafana-pod> -n monitoring -- sh
+curl -X POST http://localhost:3000/api/datasources \
+  -H "Content-Type: application/json" \
+  -u admin:prom-operator \
+  -d '{
+    "name":"Loki",
+    "type":"loki",
+    "access":"proxy",
+    "url":"http://loki-stack.monitoring.svc.cluster.local:3100",
+    "basicAuth": false,
+    "isDefault": false
+}'
+
+### Navigate to Graphana UI --> Explore --> Outline should show Loki
+
+### To make Loki fetch all namespace we need a over ride for helm
+create promtail-values.yaml
+###########################
+promtail:
+  enabled: true
+  config:
+    snippets:
+      extraScrapeConfigs: |
+        - job_name: kubernetes-pods
+          pipeline_stages:
+            - cri: {}
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - action: replace
+              source_labels: [__meta_kubernetes_pod_node_name]
+              target_label: node_name
+            - action: replace
+              source_labels: [__meta_kubernetes_namespace]
+              target_label: namespace
+            - action: replace
+              source_labels: [__meta_kubernetes_pod_name]
+              target_label: pod
+            - action: replace
+              source_labels: [__meta_kubernetes_pod_container_name]
+              target_label: container
+            - action: replace
+              replacement: /var/log/pods/*/*/*.log
+              target_label: __path__
+###########################
+helm upgrade --install loki-stack grafana/loki-stack \
+  --namespace monitoring \
+  -f promtail-values.yaml
+
+kubectl rollout restart daemonset loki-stack-promtail -n monitoring
+kubectl logs -n monitoring -l app.kubernetes.io/name=promtail
+
+  
+
 
