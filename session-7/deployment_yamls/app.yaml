@@ -15,7 +15,7 @@ spec:
       serviceAccountName: mongo-admin
       containers:
         - name: calculator-app
-          image: myapp:productionImage_app
+          image: syednadeembe/myflaskapp:productionImage_app
           ports:
             - containerPort: 9000
 ---
