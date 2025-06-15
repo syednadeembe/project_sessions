@@ -19,7 +19,8 @@ kubectl apply -f  deployment_yamls/dbase.yaml
 ### login to database 
 kubectl exec -it <mongo pod> bash
 
-show 
+mongosh -u root -p root
+
 test> show databases
 admin   156.00 KiB
 config   60.00 KiB
