@@ -1,3 +1,4 @@
+ArgoCD
 ### we will be doing the automation with argoCD with the following steps
 helm repo add argo https://argoproj.github.io/argo-helm
 kubectl create namespace argocd
@@ -7,6 +8,8 @@ kubectl get secret argocd-initial-admin-secret -n argocd \
   -o jsonpath="{.data.password}" | base64 -d && echo
 # login to browser with admin and the password that you get from above
 kubectl apply -f app-deploy.yaml
+
+FluxCD
 ### we will be doing the automation with fluxCD with the following steps
 # https://fluxcd.io/flux/installation/
 brew install fluxcd/tap/flux
