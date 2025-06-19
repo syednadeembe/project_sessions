@@ -68,5 +68,7 @@ kubectl apply -f pods-with-antiaffinity.yaml
 
 Exercise 6 : probs
 docker build -t myapp:productionImage_app .
-kubectl apply -f probs.yaml --> this wont work, understand why
+kubectl apply -f probs.yaml --> understand how this works
 
+Exercise 7 : sidecars 
+kubectl apply -f sidecar.yaml
