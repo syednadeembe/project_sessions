@@ -1,5 +1,5 @@
 // Configure the base URL for the backend services
-const baseUrl = "http://localhost:30080"; // Use the actual service name and port
+const baseUrl = "${BASE_URL}";
 
 
 // Function to update and display website hits

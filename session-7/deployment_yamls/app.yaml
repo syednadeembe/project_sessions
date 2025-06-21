@@ -15,9 +15,30 @@ spec:
       serviceAccountName: mongo-admin
       containers:
         - name: calculator-app
-          image: syednadeembe/myflaskapp:productionImage_app
+          image: linuxshakil/myflaskapp:productionImage_app-v1
           ports:
             - containerPort: 9000
+          env:
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-config
+                  key: MONGO_HOST
+            - name: MONGO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-config
+                  key: MONGO_PORT
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: MONGO_USER
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: MONGO_PASS
 ---
 apiVersion: v1
 kind: Service

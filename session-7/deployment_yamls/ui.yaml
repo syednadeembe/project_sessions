@@ -14,9 +14,16 @@ spec:
     spec:
       containers:
         - name: ui
-          image: syednadeembe/myflaskapp:productionImage_ui
+          image: linuxshakil/myflaskapp:productionImage_ui-v1
           ports:
             - containerPort: 80
+          env:
+           - name: BASE_URL
+             valueFrom:
+               configMapKeyRef:
+                 name: ui-config
+                 key: BASE_URL
+
 ---
 apiVersion: v1
 kind: Service

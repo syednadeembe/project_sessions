@@ -6,6 +6,7 @@ from prometheus_client.core import CollectorRegistry
 from prometheus_client import Summary, Counter, Histogram, Gauge
 import time
 from flask_cors import CORS
+import os
 
 #app = Flask(__name__)
 #mongo = MongoClient('database', 27017)
@@ -14,7 +15,13 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://root:root@mongo-service.default.svc.cluster.local:27017/admin"
+mongo_user = os.getenv('MONGO_USER')
+mongo_pass = os.getenv('MONGO_PASS')
+mongo_host = os.getenv('MONGO_HOST')
+mongo_port = os.getenv('MONGO_PORT')
+
+mongo_uri = f"mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:{mongo_port}/admin"
+app.config["MONGO_URI"] = mongo_uri
 mongo = PyMongo(app)
 hits_collection = mongo.db.usage
 
