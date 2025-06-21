@@ -1,0 +1,19 @@
+# app-deploy.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: session-7-deploy
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/syednadeembe/project_sessions.git
+    targetRevision: main
+    path: session-7/deployment_yamls
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: devops-labs  # or any other namespace you want to deploy into
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

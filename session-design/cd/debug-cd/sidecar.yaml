@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculator-app-deployment-with-sidecar
+  labels:
+    app: calculator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calculator
+  template:
+    metadata:
+      labels:
+        app: calculator
+    spec:
+      volumes:
+        - name: shared-logs
+          emptyDir: {}
+
+      initContainers:
+        - name: wait-for-mongo
+          image: busybox
+          command: ['sh', '-c']
+          args:
+            - |
+              echo "Checking MongoDB availability..."
+              until nc -z mongo-service.default.svc.cluster.local 27017; do
+                echo "Waiting for MongoDB at mongo-service.default.svc.cluster.local:27017..."
+                sleep 2
+              done
+              echo "MongoDB is available!"
+          resources:
+            limits:
+              cpu: "50m"
+              memory: "50Mi"
+
+      containers:
+        - name: calculator
+          image: syednadeembe/myflaskapp:productionImage_app
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /logs
+
+        - name: sidecar-logger
+          image: busybox
+          command: ['sh', '-c']
+          args:
+            - |
+              while true; do
+                echo "[Sidecar] Logging from calculator sidecar at $(date)" >> /logs/sidecar.log;
+                sleep 10;
+              done
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /logs

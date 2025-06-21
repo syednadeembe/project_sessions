@@ -1,4 +1,4 @@
-CD : Session 
+CD : Debuging Session // there are interntial errors in this exercise that we need to fix  
 Part 1
 # lab setup needs a 3 node cluster setup, I'm using Kind cluster.
 https://kind.sigs.k8s.io/docs/user/quick-start/#installation
@@ -22,8 +22,8 @@ Part 2
 kubectl label nodes devops-with-syed-worker dbase=true
 # before running the below commands make sure that you have build the images from session-7
 kind load docker-image "mongo:latest" --name devops-with-syed
-kind load docker-image "myapp:productionImage_app" --name devops-with-syed
-kind load docker-image "myapp:productionImage_ui" --name devops-with-syed
+kind load docker-image "syednadeembe/myflaskapp:productionImage_app" --name devops-with-syed
+kind load docker-image "syednadeembe/myflaskapp:productionImage_ui" --name devops-with-syed
 
 Exercise 1 : identifying the issues with the deployment from events or deployment 
 kubectl apply -f rbac.yaml 
@@ -68,5 +68,7 @@ kubectl apply -f pods-with-antiaffinity.yaml
 
 Exercise 6 : probs
 docker build -t myapp:productionImage_app .
-kubectl apply -f probs.yaml --> this wont work, understand why
+kubectl apply -f probs.yaml --> understand how this works
 
+Exercise 7 : sidecars 
+kubectl apply -f sidecar.yaml

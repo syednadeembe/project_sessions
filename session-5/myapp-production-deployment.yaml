@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: myapp:productionImage
+          image: syednadeembe/myflaskapp:prod
           resources:
             requests:
                memory: "100Mi"
@@ -38,4 +38,18 @@ spec:
       port: 9000
       targetPort: 9000
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-production-nodeport
+spec:
+  selector:
+    app: myapp-production
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+      nodePort: 30090  # optional: specify or let K8s auto-assign from 30000–32767
 

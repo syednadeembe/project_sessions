@@ -8,6 +8,58 @@ kubectl get svc
 kubectl get deployment
 kubectl get endpoints
 
+### Under Service Discovery 
+<dont only on labsetup 
+- edit the configmap of coredns to add logs and debug sections and then rollout
+kubectl -n kube-system rollout restart deployment coredns >
+### What enables a pod to find and communicate with each other without hardcoding IP 
+- CoreDNS : maps service names to IPs
+- Headless Services : no cluster IP, returns pod IPs instead
+- External Name : maps service to an external DNS name
+
+### DNS-Based Service Discovery (ClusterIP)
+kubectl run web --image=nginx --restart=Never --port=80
+kubectl expose pod web --port=80 --target-port=80 --name=web-service
+
+kubectl run test --image=busybox --rm -it --restart=Never -- /bin/sh
+# Inside the test pod
+wget -qO- http://web-service
+
+### Role of kube-proxy
+kubectl get svc myapp-production-clusterip
+sudo iptables-save | grep <ClusterIP of any Service>
+sudo iptables -t nat -L KUBE-SERVICES -n | grep <cluster-ip>
+sudo iptables -t nat -L KUBE-SERVICES -n --line-numbers
+
+## For Example #######################################
+
+sudo iptables-save | grep 10.104.12.212
+- You’ll see something like: -A KUBE-SERVICES -d 10.104.12.212/32 -p tcp --dport 80 -j KUBE-SVC-ABCD1234
+- Note down the service chain ID: KUBE-SVC-ABCD1234
+sudo iptables-save | grep KUBE-SVC-ABCD1234
+- You will get endpoint chains (each represents a Pod)
+
+Service ClusterIP (10.104.12.212:9000)
+    ⇓
+iptables KUBE-SERVICES
+    ⇓
+KUBE-SVC-YGPY7WI7YZ3DB7GT
+    ⇓
+KUBE-SEP-XYZ → Pod IP:Port (e.g., 10.244.1.25:9000)
+####################################################
+
+### For Headless Service
+kubectl apply -f headless.yaml
+kubectl run testpod --image=busybox:1.28 -it --rm -- /bin/sh
+ping db-0.headless-db
+ping db-1.headless-db
+
+### For External Service
+kubectl apply -f external_service.yaml
+kubectl run curlpod --image=radial/busyboxplus:curl -it --rm
+# Inside the pod
+nslookup external-google.default.svc.cluster.local
+
 ###download the ingress ngix-controller 
 curl -LO https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/baremetal/deploy.yaml
 kubectl apply -f deploy.yaml
@@ -27,7 +79,7 @@ kubectl describe ingress myapp-ingress
 
 
 ###navigate to ingress-nginx and check the controller logs 
-kubectl logs -f deployment/ingress-nginx-controller
+kubectl logs -f deployment/ingress-nginx-controller -n ingress-nginx
 
 ###open another terminal 
 

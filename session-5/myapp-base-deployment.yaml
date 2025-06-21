@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: myapp:baseImage
+          image: syednadeembe/myflaskapp:dev
           ports:
             - containerPort: 9000
 

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ui
-          image: myapp:productionImage_ui
+          image: syednadeembe/myflaskapp:productionImage_ui
           ports:
             - containerPort: 80
 ---

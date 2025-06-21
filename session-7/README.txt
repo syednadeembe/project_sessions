@@ -1,6 +1,12 @@
 ### create the Images with docker compose file
 docker-compose build --no-cache
 
+docker tag myapp:productionImage_ui syednadeembe/myflaskapp:productionImage_ui
+docker tag myapp:productionImage_app syednadeembe/myflaskapp:productionImage_app
+
+docker push syednadeembe/myflaskapp:productionImage_ui
+docker push syednadeembe/myflaskapp:productionImage_app
+
 ### deploy netpol first 
 kubectl apply -f  deployment_yamls/netpol.yaml
 
@@ -12,6 +18,7 @@ kubectl apply -f  deployment_yamls/dbase.yaml
 
 ### login to database 
 kubectl exec -it <mongo pod> bash
+
 mongosh -u root -p root
 
 test> show databases

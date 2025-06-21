@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stress-load
+  labels:
+    app: stress-load
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stress-load
+  template:
+    metadata:
+      labels:
+        app: stress-load
+    spec:
+      containers:
+      - name: stress
+        image: vish/stress
+        args:
+        - -cpus
+        - "1"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+          # No limits: Let VPA handle scaling within allowed range
