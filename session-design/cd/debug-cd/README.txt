@@ -27,7 +27,7 @@ kind load docker-image "syednadeembe/myflaskapp:productionImage_ui" --name devop
 
 Exercise 1 : identifying the issues with the deployment from events or deployment 
 kubectl apply -f rbac.yaml 
-kubectl apply -f dbase.yaml  ### this pod will not be in running state
+kubectl apply -f dbase.yaml  ### this pod will work be in running state, beacuse of this "kubectl label nodes devops-with-syed-worker dbase=true"
 kubectl apply -f app-deployment.yaml ### this pod will not be in running state
 kubectl apply -f ui-deployment.yaml ### this pod will be in running state
 kubectl get pods 
